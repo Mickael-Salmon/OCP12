@@ -5,6 +5,13 @@ It also provides a utility function to retrieve the application directory path o
 """
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+# Load variables from local file .env
+load_dotenv()
+
+####### TO DO ######
+####### Add secret key to .env file #######
 
 # Fetching environment variables for database and secret key
 DATABASE_USERNAME = os.environ.get("EPICEVENTS_USER")

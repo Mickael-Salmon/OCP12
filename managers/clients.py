@@ -5,10 +5,10 @@ It handles CRUD operations on clients and ensures that the user has the necessar
 """
 import typing
 from sqlalchemy.orm import Session
-from database.manager import Manager
+from managers.manager import Manager
 from models.clients import Client
 from models.employees import Department as roles
-from authentification.decorators import login_required, permission_required
+from accesscontrol.sec_sessions import login_required, permission_required
 
 class ClientsManager(Manager):
     """
