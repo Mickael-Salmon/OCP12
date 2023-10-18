@@ -1,0 +1,170 @@
+﻿[
+    {
+        "start_date": "2024-01-20 10:00:00",
+        "end_date": "2024-01-20 18:00:00",
+        "location": "Conference Room A",
+        "attendees_count": 75,
+        "notes": "Annual company meeting"
+    },
+    {
+        "start_date": "2024-02-15 14:00:00",
+        "end_date": "2024-02-15 17:00:00",
+        "location": "Boardroom B",
+        "attendees_count": 100,
+        "notes": "Conference on emerging trends"
+    },
+    {
+        "start_date": "2024-03-10 11:00:00",
+        "end_date": "2024-03-10 15:00:00",
+        "location": "Training Room C",
+        "attendees_count": 50,
+        "notes": "Internal training session"
+    },
+    {
+        "start_date": "2024-04-25 09:00:00",
+        "end_date": "2024-04-25 17:00:00",
+        "location": "Exhibition Hall D",
+        "attendees_count": 150,
+        "notes": "Industry trade show"
+    },
+    {
+        "start_date": "2024-05-20 10:30:00",
+        "end_date": "2024-05-20 13:00:00",
+        "location": "Seminar Room E",
+        "attendees_count": 80,
+        "notes": "Marketing seminar"
+    },
+    {
+        "start_date": "2024-06-12 15:00:00",
+        "end_date": "2024-06-12 19:00:00",
+        "location": "Presentation Room F",
+        "attendees_count": 100,
+        "notes": "Product launch event"
+    },
+    {
+        "start_date": "2024-07-16 12:00:00",
+        "end_date": "2024-07-16 16:30:00",
+        "location": "Development Room G",
+        "attendees_count": 60,
+        "notes": "Development team meeting"
+    },
+    {
+        "start_date": "2024-08-29 11:30:00",
+        "end_date": "2024-08-29 15:30:00",
+        "location": "Reception Hall H",
+        "attendees_count": 120,
+        "notes": "Company party"
+    },
+    {
+        "start_date": "2024-09-22 16:00:00",
+        "end_date": "2024-09-22 18:30:00",
+        "location": "Meeting Room I",
+        "attendees_count": 40,
+        "notes": "Project team meeting"
+    },
+    {
+        "start_date": "2024-10-15 10:00:00",
+        "end_date": "2024-10-15 12:30:00",
+        "location": "Conference Room J",
+        "attendees_count": 45,
+        "notes": "Strategic discussion"
+    },
+    {
+        "start_date": "2024-11-18 13:00:00",
+        "end_date": "2024-11-18 16:00:00",
+        "location": "Boardroom K",
+        "attendees_count": 90,
+        "notes": "Conference on new technologies"
+    },
+    {
+        "start_date": "2024-12-10 09:30:00",
+        "end_date": "2024-12-10 12:00:00",
+        "location": "Seminar Room L",
+        "attendees_count": 70,
+        "notes": "Sales training session"
+    },
+    {
+        "start_date": "2025-01-15 14:00:00",
+        "end_date": "2025-01-15 17:00:00",
+        "location": "Conference Room A",
+        "attendees_count": 80,
+        "notes": "Quarterly business review"
+    },
+    {
+        "start_date": "2025-02-20 11:00:00",
+        "end_date": "2025-02-20 14:00:00",
+        "location": "Boardroom B",
+        "attendees_count": 120,
+        "notes": "Product roadmap presentation"
+    },
+    {
+        "start_date": "2025-03-12 09:00:00",
+        "end_date": "2025-03-12 12:00:00",
+        "location": "Training Room C",
+        "attendees_count": 60,
+        "notes": "Customer service training"
+    },
+    {
+        "start_date": "2025-04-28 10:30:00",
+        "end_date": "2025-04-28 13:00:00",
+        "location": "Exhibition Hall D",
+        "attendees_count": 200,
+        "notes": "Product showcase"
+    },
+    {
+        "start_date": "2025-05-22 15:00:00",
+        "end_date": "2025-05-22 18:00:00",
+        "location": "Seminar Room E",
+        "attendees_count": 90,
+        "notes": "Marketing campaign review"
+    },
+    {
+        "start_date": "2025-06-15 12:00:00",
+        "end_date": "2025-06-15 16:00:00",
+        "location": "Presentation Room F",
+        "attendees_count": 120,
+        "notes": "Product demo day"
+    },
+    {
+        "start_date": "2025-07-19 11:00:00",
+        "end_date": "2025-07-19 14:00:00",
+        "location": "Development Room G",
+        "attendees_count": 70,
+        "notes": "Code review session"
+    },
+    {
+        "start_date": "2025-08-30 10:00:00",
+        "end_date": "2025-08-30 13:00:00",
+        "location": "Reception Hall H",
+        "attendees_count": 150,
+        "notes": "Employee appreciation event"
+    },
+    {
+        "start_date": "2025-09-23 16:30:00",
+        "end_date": "2025-09-23 19:00:00",
+        "location": "Meeting Room I",
+        "attendees_count": 50,
+        "notes": "Project status update"
+    },
+    {
+        "start_date": "2025-10-18 13:00:00",
+        "end_date": "2025-10-18 16:00:00",
+        "location": "Conference Room J",
+        "attendees_count": 60,
+        "notes": "Budget planning meeting"
+    },
+    {
+        "start_date": "2025-11-21 09:30:00",
+        "end_date": "2025-11-21 12:30:00",
+        "location": "Boardroom K",
+        "attendees_count": 100,
+        "notes": "Product launch preparation"
+    },
+    {
+        "start_date": "2025-12-15 14:00:00",
+        "end_date": "2025-12-15 17:00:00",
+        "location": "Seminar Room L",
+        "attendees_count": 80,
+        "notes": "Sales strategy review"
+    }
+]

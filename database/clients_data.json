@@ -1,0 +1,149 @@
+﻿[
+    {
+        "full_name": "Olivia Rodriguez",
+        "email": "olivia.rodriguez@example.com",
+        "phone": "111-222-3333",
+        "enterprise": "Innovative Technologies Inc.",
+        "sales_contact_id": 2
+    },
+    {
+        "full_name": "William Garcia",
+        "email": "william.garcia@example.com",
+        "phone": "444-555-6666",
+        "enterprise": "Garcia Enterprises LLC",
+        "sales_contact_id": 5
+    },
+    {
+        "full_name": "Sophia Martinez",
+        "email": "sophia.martinez@example.com",
+        "phone": "777-888-9999",
+        "enterprise": "Martinez Innovations Group",
+        "sales_contact_id": 8
+    },
+    {
+        "full_name": "James Hernandez",
+        "email": "james.hernandez@example.com",
+        "phone": "222-333-4444",
+        "enterprise": "Hernandez Solutions Inc.",
+        "sales_contact_id": 11
+    },
+    {
+        "full_name": "Emma Lopez",
+        "email": "emma.lopez@example.com",
+        "phone": "555-555-5555",
+        "enterprise": "Lopez Enterprises LLC",
+        "sales_contact_id": 2
+    },
+    {
+        "full_name": "Michael Perez",
+        "email": "michael.perez@example.com",
+        "phone": "888-888-8888",
+        "enterprise": "Perez Dynamics Group",
+        "sales_contact_id": 5
+    },
+    {
+        "full_name": "Ava Gonzalez",
+        "email": "ava.gonzalez@example.com",
+        "phone": "123-456-7890",
+        "enterprise": "Gonzalez Innovate Inc.",
+        "sales_contact_id": 8
+    },
+    {
+        "full_name": "David Rodriguez",
+        "email": "david.rodriguez@example.com",
+        "phone": "999-999-9999",
+        "enterprise": "Rodriguez Pro Global LLC",
+        "sales_contact_id": 11
+    },
+    {
+        "full_name": "Mia Hernandez",
+        "email": "mia.hernandez@example.com",
+        "phone": "666-777-8888",
+        "enterprise": "Hernandez FutureTech Inc.",
+        "sales_contact_id": 2
+    },
+    {
+        "full_name": "Benjamin Perez",
+        "email": "benjamin.perez@example.com",
+        "phone": "987-654-3210",
+        "enterprise": "Perez Peak Solutions LLC",
+        "sales_contact_id": 5
+    },
+    {
+        "full_name": "Isabella Torres",
+        "email": "isabella.torres@example.com",
+        "phone": "111-111-1111",
+        "enterprise": "Torres Technologies Group",
+        "sales_contact_id": 8
+    },
+    {
+        "full_name": "Ethan Ramirez",
+        "email": "ethan.ramirez@example.com",
+        "phone": "222-222-2222",
+        "enterprise": "Ramirez Innovations Inc.",
+        "sales_contact_id": 11
+    },
+    {
+        "full_name": "Sofia Flores",
+        "email": "sofia.flores@example.com",
+        "phone": "333-333-3333",
+        "enterprise": "Flores Enterprises LLC",
+        "sales_contact_id": 2
+    },
+    {
+        "full_name": "Alexander Sanchez",
+        "email": "alexander.sanchez@example.com",
+        "phone": "444-444-4444",
+        "enterprise": "Sanchez Dynamics Group",
+        "sales_contact_id": 5
+    },
+    {
+        "full_name": "Madison Perez",
+        "email": "madison.perez@example.com",
+        "phone": "555-555-5555",
+        "enterprise": "Perez Innovate Inc.",
+        "sales_contact_id": 8
+    },
+    {
+        "full_name": "Daniel Ortiz",
+        "email": "daniel.ortiz@example.com",
+        "phone": "666-666-6666",
+        "enterprise": "Ortiz Solutions Inc.",
+        "sales_contact_id": 11
+    },
+    {
+        "full_name": "Chloe Rivera",
+        "email": "chloe.rivera@example.com",
+        "phone": "777-777-7777",
+        "enterprise": "Rivera Enterprises LLC",
+        "sales_contact_id": 2
+    },
+    {
+        "full_name": "Josephine Gomez",
+        "email": "josephine.gomez@example.com",
+        "phone": "888-888-8888",
+        "enterprise": "Gomez Innovations Group",
+        "sales_contact_id": 5
+    },
+    {
+        "full_name": "Sebastian Cruz",
+        "email": "sebastian.cruz@example.com",
+        "phone": "999-999-9999",
+        "enterprise": "Cruz Pro Global LLC",
+        "sales_contact_id": 8
+    },
+    {
+        "full_name": "Avery Reyes",
+        "email": "avery.reyes@example.com",
+        "phone": "123-123-1234",
+        "enterprise": "Reyes FutureTech Inc.",
+        "sales_contact_id": 11
+    },
+    {
+        "full_name": "Evelyn Torres",
+        "email": "evelyn.torres@example.com",
+        "phone": "234-234-2345",
+        "enterprise": "Torres Peak Solutions LLC",
+        "sales_contact_id": 2
+    }
+]
