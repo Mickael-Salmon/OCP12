@@ -1,4 +1,9 @@
-﻿from models import Base  # Importing the base class for SQLAlchemy models
+﻿"""
+This file defines the Event model, which represents an event entity in the application.
+The model includes various fields like start_date, end_date, location, and attendees_count, among others.
+It specifies the relationships with the 'Contract' and 'Employee' models through the 'contract_id' and 'support_contact_id' fields, respectively.
+"""
+from models import Base  # Importing the base class for SQLAlchemy models
 from sqlalchemy.orm import relationship  # For defining relationships between models
 from sqlalchemy.sql import func  # SQLAlchemy's SQL function library
 from sqlalchemy import (

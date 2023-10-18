@@ -1,4 +1,10 @@
-﻿from models import Base  # Importing the base class for SQLAlchemy models
+﻿"""
+This file defines the Employee model, which represents an employee entity in the application.
+The model includes various fields like full_name, email, password_hash, and salt, among others.
+It also includes methods for password hashing and verification.
+The model specifies the 'department' field as an Enum, representing the department to which the employee belongs.
+"""
+from models import Base  # Importing the base class for SQLAlchemy models
 from sqlalchemy.sql import func  # SQLAlchemy's SQL function library
 from sqlalchemy import Enum, Column, Integer, String, DateTime  # Importing column types
 import enum  # Python's standard library for enum types

@@ -1,4 +1,9 @@
-﻿from models import Base  # Importing the base class for SQLAlchemy models
+﻿"""
+This file defines the Client model, which represents a client entity in the application.
+The model includes various fields like full_name, email, phone, and enterprise, among others.
+It also specifies the relationship with the 'Employee' model through the 'sales_contact_id' field.
+"""
+from models import Base  # Importing the base class for SQLAlchemy models
 from sqlalchemy.orm import relationship  # ORM package for creating relationships between tables
 from sqlalchemy.sql import func  # SQLAlchemy's SQL function library
 from sqlalchemy import (

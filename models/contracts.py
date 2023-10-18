@@ -1,4 +1,9 @@
-﻿from models import Base  # Importing the base class for SQLAlchemy models
+﻿"""
+This file defines the Contract model, which represents a contract entity in the application.
+The model includes various fields like total_amount, to_be_paid, and is_signed, among others.
+It specifies the relationships with the 'Client' and 'Employee' models through the 'client_id' and 'account_contact_id' fields, respectively.
+"""
+from models import Base  # Importing the base class for SQLAlchemy models
 from sqlalchemy.orm import relationship  # For defining relationships between models
 from sqlalchemy.sql import func  # SQLAlchemy's SQL function library
 from sqlalchemy import (
