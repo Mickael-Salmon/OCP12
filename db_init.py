@@ -1,26 +1,31 @@
-﻿"""
-This script is responsible for populating the database tables with initial data.
-It reads JSON files containing the data for employees, clients, contracts, and events
-and then adds these records to the respective tables in the database.
-This is usually run once when setting up the application to ensure that the database is in a usable state.
-"""
-import json
+﻿import json
 import datetime
 from sqlalchemy.orm import Session
 from pathlib import Path
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
 
 from managers import manager
+from managers.manager import drop_tables, create_tables
 from models.employees import Employee
 from models.clients import Client
 from models.contracts import Contract
 from models.events import Event
 
+# Initialize the Rich console
+console = Console()
+
+# Drop all tables
+drop_tables()
+console.print(Panel("All TABLES have been [bold red]DELETED[/bold red]"), justify="left")
+
+# Recreate tables
+create_tables()
+console.print(Panel("All TABLES have been [bold green]RECREATED[/bold green]"), justify="left")
 
 def create_employees():
-    """
-    Populate the Employee table in the database from data found in `database/employees_data.json`.
-    """
-    print("Creating employees...")
+    console.print("[bold cyan]Creating employees...[/bold cyan]")
     data_path = Path("database", "employees_data.json")
     with open(data_path, "rb") as reader:
         employees_data = json.loads(reader.read())
@@ -36,13 +41,10 @@ def create_employees():
         employees.append(new_employee)
     session.add_all(employees)
     session.commit()
-
+    console.print("[bold green]Employees have been created successfully ![/bold green]")
 
 def create_clients():
-    """
-    Populate the Client table in the database from data found in `database/clients_data.json`.
-    """
-    print("Creating clients...")
+    console.print("[bold cyan]Creating clients...[/bold cyan]")
     data_path = Path("database", "clients_data.json")
     with open(data_path, "rb") as reader:
         clients_data = json.loads(reader.read())
@@ -59,13 +61,10 @@ def create_clients():
     ]
     session.add_all(clients)
     session.commit()
-
+    console.print("[bold green]All clients have been created successfully ![/bold green]")
 
 def create_contracts():
-    """
-    Populate the Contract table in the database from data found in `database/contracts_data.json`.
-    """
-    print("Creating contracts...")
+    console.print("[bold cyan]Creating contracts...[/bold cyan]")
     data_path = Path("database", "contracts_data.json")
     with open(data_path, "rb") as reader:
         contracts_data = json.loads(reader.read())
@@ -82,13 +81,10 @@ def create_contracts():
     ]
     session.add_all(contracts)
     session.commit()
-
+    console.print("[bold green]All contracts have been created successfully[/bold green]")
 
 def create_events():
-    """
-    Populate the Event table in the database from data found in `database/events_data.json`.
-    """
-    print("Creating events...")
+    console.print("[bold cyan]Creating events...[/bold cyan]")
     data_path = Path("database", "events_data.json")
     with open(data_path, "rb") as reader:
         events_data = json.loads(reader.read())
@@ -100,20 +96,15 @@ def create_events():
             location=data["location"],
             attendees_count=data["attendees_count"],
             notes=data["notes"],
-            support_contact_id=data["support_contact_id"],
+            support_contact_id=data.get("support_contact_id", None),
         )
         for data in events_data
     ]
     session.add_all(events)
     session.commit()
-
+    console.print("[bold green]All events have been created successfully ![/bold green]")
 
 if __name__ == "__main__":
-    """
-    Reset the database tables and populate them with initial data.
-    """
-    manager.drop_tables()
-    manager.create_tables()
     create_employees()
     create_clients()
     create_contracts()

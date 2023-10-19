@@ -8,7 +8,7 @@ from sqlalchemy.exc import IntegrityError
 import sqlalchemy
 import typing
 
-from authentification.environ import DATABASE_PASSWORD, DATABASE_USERNAME
+from accesscontrol.env_variables import DATABASE_PASSWORD, DATABASE_USERNAME
 from models import Base
 from models.employees import Employee
 from models.clients import Client
@@ -18,7 +18,7 @@ from models.events import Event
 
 # Initialize the database engine
 engine = sqlalchemy.create_engine(
-    f"mysql+pymysql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@localhost/EpicEvents"
+    f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@localhost/epic_events"
 )
 
 

@@ -1,27 +1,35 @@
-﻿from dotenv import load_dotenv
-import os
-from sqlalchemy import create_engine
-from models import Base  # Assure-toi que tous tes modèles sont importés ici
+﻿from sqlalchemy import create_engine
+from dotenv import load_dotenv
 from rich.console import Console
+import os
 
-# Initialiser rich
+# Initialize Rich console
 console = Console()
 
-# Charger les variables d'environnement
-console.log("Chargement des variables d'environnement...", style="bold magenta")
+# Load the environment variables
 load_dotenv()
 
-# Récupérer l'URL de la base de données à partir des variables d'environnement
-console.log("Récupération de l'URL de la base de données...", style="bold magenta")
+# Get the database URL from the environment variable
 database_url = os.getenv("DATABASE_URL")
 
-# Créer une instance de 'engine' connectée à ta base de données PostgreSQL
-console.log("Création de l'instance de 'engine'...", style="bold magenta")
-engine = create_engine(database_url)
+# Check if the database URL is available
+if database_url is None:
+    console.print("[red]Error: DATABASE_URL not found in environment variables.[/red]")
+    exit()
 
-# Créer toutes les tables
-console.log("Création des tables dans la base de données...", style="bold magenta")
-Base.metadata.create_all(engine)
+# Create the database engine
+try:
+    engine = create_engine(database_url)
+    console.print(f"[green]Successfully connected to database at {database_url}[/green]")
+except Exception as e:
+    console.print(f"[red]Error while connecting to database: {e}[/red]")
+    exit()
 
-# Afficher un message de succès
-console.log("Toutes les tables ont été créées avec succès!", style="bold green")
+# Assuming that your Base class is in a module called 'models'
+try:
+    from models import Base  # Import the Base object from your models module
+    # Create all tables in the database which are defined by the classes that extend the Base class
+    Base.metadata.create_all(engine)
+    console.print("[green]Successfully created tables in the database.[/green]")
+except Exception as e:
+    console.print(f"[red]Error while creating tables: {e}[/red]")
