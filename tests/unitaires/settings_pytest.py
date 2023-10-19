@@ -46,7 +46,14 @@ def account_employee() -> Employee:
     """
     Fixture for creating an accounting employee.
     """
-    # ... (Same as your existing code)
+    employee = Employee(
+        full_name="account, employee",
+        email="account.employee@epicevents.co",
+        department=Department.ACCOUNTING,
+    )
+
+    employee.set_password("password")
+    return employee
 
 
 # -----------------------------------
@@ -66,11 +73,29 @@ def setup_database():
 # Session fixture
 # -----------------------------------
 @pytest.fixture(scope="function")
-def session(setup_database, account_employee, sales_employee, support_employee, client, contract, event):
-    """
-    Fixture for setting up a session for database operations.
-    """
-    # ... (Same as your existing code)
+def session(
+    setup_database,
+    account_employee,
+    sales_employee,
+    support_employee,
+    client,
+    contract,
+    event,
+):
+    connection = __TEST_ENGINE.connect()
+    transaction = connection.begin()
+    session = Session(bind=connection)
+
+    session.add_all(
+        [sales_employee, account_employee, support_employee, client, contract, event]
+    )
+    session.commit()
+
+    yield session
+
+    session.close()
+    transaction.rollback()
+    connection.close()
 
 
 # -----------------------------------
