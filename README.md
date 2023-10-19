@@ -1,6 +1,7 @@
 # OCP12
 # Projet démarré
-## in progress
+
+# In progress
 
 ## Résumé du cahier des charges
 
@@ -105,3 +106,113 @@ erDiagram
     }
 
 ```
+
+### 1. Installation de PostgreSQL et PgAdmin:
+
+- PostgreSQL:
+
+
+``` Shell
+sudo dnf update sudo dnf install postgresql-server postgresql-contrib
+```
+
+Après l'installation, initialiser la base de données:
+
+``` Shell
+sudo postgresql-setup --initdb
+```
+
+Puis démarrer et activer le service:
+
+```shell
+sudo systemctl start postgresql sudo systemctl enable postgresql
+```
+
+- PgAdmin:
+
+```Shell
+sudo dnf install pgadmin4
+```
+### 2. Créer une nouvelle base de données:
+
+- En Shell :
+- TO DO : lister les commandes pour créer et configurer les droits sur la DB
+
+``` Shell
+ psql -U postgres -h localhost -d epic_events
+
+```
+
+
+- Crée une nouvelle base de données avec le nom : `epic_events`.
+
+### 3. Créer un utilisateur pour l'application:
+
+- Créer un nouvel utilisateur (ou "Role" dans le jargon PostgreSQL).
+- Attribuer un nom et un mot de passe et assurer les droits suffisants sur la base de données epic_events.
+
+
+### 5. Configurer les variables d'environnement:
+
+- Les informations de connexion à la base de données dans des variables d'environnement pour des raisons de sécurité. Nous utilisons la librairie  `dot_env`
+
+### 6. Créer un environnement virtuel Python:
+
+- Dans le répertoire où tu vas stocker ton projet, crée un environnement virtuel:
+
+
+    ``` Python
+    python3 -m venv .env
+    ```
+
+- Activer l'environnement:
+
+
+   ``` Shell
+   source .env/bin/activate
+   ```
+
+- Installer les dépendances comme `SQLAlchemy` et `Dot_env`:
+### Créer un fichier pour les variables d'environnement
+
+1. **Crée un fichier `.env` dans le répertoire de ton projet**. Ce fichier contiendra tes variables d'environnement.
+
+
+   ``` Shell
+   touch .env
+   ```
+
+
+1. **Ouvrir ce fichier avec un éditeur de texte** et ajouter les variables.
+
+- Par exemple :
+
+``` Shell
+DATABASE_URL=postgresql://username:password@localhost/dbname SECRET_KEY=mysecretkey
+
+DATABASE_URL=postgresql://user:Password@localhost/epic_events
+EPICEVENTS_USER=user
+EPICEVENTS_PW=Password
+EPICEVENTS_SK=mySecretKey
+```
+
+Ici, `username` et `password` sont ceux que tu as définis lors de la création de l'utilisateur PostgreSQL, et `dbname` est le nom de la base de données que tu as créée.
+
+
+### Charger les variables d'environnement dans ton application
+
+1. **Installer la librairie `python-dotenv`**: Cette librairie permet de charger les variables d'environnement depuis un fichier `.env` dans le projet.
+```Shell
+pip install python-dotenv
+```
+
+2. **Charger les variables dans le code Python**:
+
+``` Python
+from dotenv import load_dotenv import os  load_dotenv()  database_url = os.getenv("DATABASE_URL") secret_key = os.getenv("SECRET_KEY")
+```
+
+Ici, `load_dotenv()` lit le fichier `.env` et charge les variables pour les utiliser avec `os.getenv().
+
+
+# A SUIVRE - In Progress
