@@ -14,6 +14,7 @@ class Department(enum.Enum):  # Enum class to represent different departments
     """
     Enum to define possible department values for employees.
     """
+    ADMIN = "admin"
     SALES = "sales"
     ACCOUNTING = "accounting"
     SUPPORT = "support"

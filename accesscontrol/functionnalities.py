@@ -6,10 +6,9 @@ and manages the storing and clearing of these tokens.
 """
 from sqlalchemy.orm import Session
 import sqlalchemy
-
 from models.employees import Employee, Department
-from database.manager import engine
-from authentification.token import create_token, store_token, clear_token
+from managers.manager import engine
+from accesscontrol.jwt_token import create_token, store_token, clear_token
 
 
 def login(email: str, password: str) -> Employee:

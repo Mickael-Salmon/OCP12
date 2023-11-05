@@ -6,10 +6,9 @@ It ensures that only authorized roles can perform certain operations like creati
 import pytest
 import sqlalchemy
 from sqlalchemy.orm import Session
-
 from managers.clients import ClientsManager
 from models.clients import Client
-from settings_pytest import login_as_accounting, login_as_sales, login_as_support
+from tests.unit.settings_pytest import login_as_sales, login_as_support, login_as_accounting
 
 FAKE_TEST_CLIENT = {
     "email": "john.tester@test.test",

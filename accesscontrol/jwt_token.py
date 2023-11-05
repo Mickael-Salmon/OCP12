@@ -8,7 +8,7 @@ from pathlib import Path
 import datetime
 import os
 import jwt
-from authentification.environ import get_epicevents_path, SECRET_KEY
+from accesscontrol.env_variables import get_epicevents_path, SECRET_KEY
 
 # Algorithm used for JWT
 __JWT_ALGORITHM = "HS256"

@@ -1,0 +1,82 @@
+.
+├── accesscontrol
+│   ├── env_variables.py
+│   ├── functionnalities.py
+│   ├── __init__.py
+│   ├── jwt_token.py
+│   ├── __pycache__
+│   │   ├── env_variables.cpython-311.pyc
+│   │   ├── __init__.cpython-311.pyc
+│   │   ├── jwt_token.cpython-311.pyc
+│   │   └── sec_sessions.cpython-311.pyc
+│   └── sec_sessions.py
+├── Archive.zip
+├── config
+├── controllers
+├── database
+│   ├── clients_data.json
+│   ├── contracts_data.json
+│   ├── database.py
+│   ├── db_create_secret_key.py
+│   ├── db_init.py
+│   ├── employees_data.json
+│   ├── events_data_contact_id.json
+│   ├── events_data.json
+│   ├── login.py
+│   ├── logout.py
+│   └── register.py
+├── db_create_tables.py
+├── db_delete_tables.py
+├── db_init.py
+├── db_test_check_tables.py
+├── db_test_connection.py
+├── managers
+│   ├── clients.py
+│   ├── contracts.py
+│   ├── employees.py
+│   ├── events.py
+│   ├── __init__.py
+│   ├── manager.py
+│   └── __pycache__
+│       ├── clients.cpython-311.pyc
+│       ├── __init__.cpython-311.pyc
+│       └── manager.cpython-311.pyc
+├── migrations
+├── models
+│   ├── clients.py
+│   ├── contracts.py
+│   ├── employees.py
+│   ├── events.py
+│   ├── __init__.py
+│   └── __pycache__
+│       ├── clients.cpython-311.pyc
+│       ├── contracts.cpython-311.pyc
+│       ├── employees.cpython-311.pyc
+│       ├── events.cpython-311.pyc
+│       └── __init__.cpython-311.pyc
+├── __pycache__
+│   ├── db_init.cpython-311-pytest-7.4.2.pyc
+│   ├── db_test_check_tables.cpython-311-pytest-7.4.2.pyc
+│   ├── db_test_connection.cpython-311-pytest-7.4.2.pyc
+│   ├── settings_pytest.cpython-311.pyc
+│   ├── test_create_customer.cpython-311-pytest-7.2.2.pyc
+│   ├── test_create_customer.cpython-311-pytest-7.4.2.pyc
+│   ├── test_createEmployee.cpython-311-pytest-7.2.2.pyc
+│   └── test_createEmployee.cpython-311-pytest-7.4.2.pyc
+├── README.md
+├── requirements.txt
+├── session
+│   └── token.txt
+├── settings_pytest.py
+├── structure.txt
+├── test_create_customer.py
+├── test_createEmployee.py
+├── tests
+│   └── unit
+│       ├── settings_pytest.py
+│       ├── test_create_customer.py
+│       └── test_createEmployee.py
+├── utils
+└── views
+
+17 directories, 63 files

@@ -71,3 +71,10 @@ class Contract(Base):  # Contract model class inheriting from Base
     """
     Establishing a relationship with the Employee model for easier navigation.
     """
+    def list_contracts(self):
+        contracts = self.session.query(Contract).all()
+        self.console.print("[bold green]Liste des contrats :[/bold green]")
+        for contract in contracts:
+            client_name = contract.client.full_name if contract.client else "Client inconnu"
+            self.console.print(f"{contract.id} : {client_name} - {contract.total_amount} - {'Signé' if contract.is_signed else 'Non signé'}")
+        return contracts

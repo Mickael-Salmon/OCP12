@@ -12,6 +12,7 @@ from sqlalchemy import (
     String,
     DateTime,
     ForeignKey,
+    Boolean,
 )  # Importing column types and ForeignKey for creating table schema
 
 class Client(Base):  # Client model class inheriting from Base
@@ -84,3 +85,4 @@ class Client(Base):  # Client model class inheriting from Base
     This establishes an ORM relationship between Client and Employee, allowing us to access
     the Employee model when we have a Client object.
     """
+    is_active = Column(Boolean, default=True)

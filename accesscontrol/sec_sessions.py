@@ -8,63 +8,60 @@ It does maintain the integrity and confidentiality of the application data.
 from sqlalchemy.orm import Session
 import sqlalchemy
 import typing
-
-from authentification.token import decode_token, retreive_token
+from accesscontrol.jwt_token import decode_token, retreive_token
 from models.employees import Employee, Department
-from database.manager import engine
+from managers.manager import engine
 
-def login_required(function):
+def authenticated_action(function):
     """
-    Decorator for checking if the current user is authenticated.
-    It tries to retrieve and decode the token stored on the user's disk.
-
-    Raises:
-    * PermissionError: If authentication fails.
+    Decorateur qui vérifie la présence d'un token avant de permettre l'exécution d'une action nécessitant une authentification.
     """
     def wrapper(*args, **kwargs):
         token = retreive_token()
-
         if not decode_token(token):
-            raise PermissionError("Please login and retry.")
+            # Logique pour gérer l'échec d'authentification...
+            return
+        return function(*args, **kwargs)
+    return wrapper
+
+def admin_required(function):
+    """
+    Decorateur qui vérifie que l'utilisateur connecté est un administrateur avant de permettre l'exécution d'une action.
+    """
+    @authenticated_action
+    def wrapper(*args, **kwargs):
+        token = retreive_token()
+        token_payload = decode_token(token)
+        user_id = token_payload["user_id"]
+
+        session = Session(engine)  # Assure-toi que Session et engine sont importés correctement
+        employee = session.query(Employee).get(user_id)
+
+        if not employee or employee.department != Department.ADMIN:
+            raise PermissionError("Accès refusé : Vous devez être connecté en tant qu'administrateur.")
 
         return function(*args, **kwargs)
-
     return wrapper
+
 
 def permission_required(roles: typing.List[Department]):
     """
-    Decorator for checking if the authenticated user belongs to a certain department.
-
-    Args:
-    * roles (List[Department]): A list of Department enums that are authorized to access the function.
-
-    Raises:
-    * PermissionError: If the user does not have permission to access the function.
+    Decorateur pour vérifier si l'utilisateur authentifié appartient à un certain département.
     """
+    @authenticated_action
     def decorator(function):
         def wrapper(*args, **kwargs):
-            REJECT_MESSAGE = "Permission denied."
-
             token = retreive_token()
             token_payload = decode_token(token)
-
-            if not token_payload:
-                raise PermissionError(REJECT_MESSAGE)
-
             user_id = token_payload["user_id"]
 
-            session = Session(engine)
-            request = sqlalchemy.select(Employee).where(Employee.id == user_id)
-            employee = session.scalar(request)
+            session = Session(engine)  # Assure-toi que Session et engine sont importés correctement
+            employee = session.query(Employee).get(user_id)
 
-            if not employee:
-                raise PermissionError(REJECT_MESSAGE)
-
-            if employee.department not in roles:
-                raise PermissionError(REJECT_MESSAGE)
+            if not employee or employee.department not in roles:
+                raise PermissionError("Permission refusée : Utilisateur non autorisé.")
 
             return function(*args, **kwargs)
-
         return wrapper
-
     return decorator
+

@@ -145,6 +145,11 @@
         "department": "ACCOUNTING"
     },
     {
+        "full_name": "Simple Admin",
+        "email": "simple.admin@test.test",
+        "department": "ADMIN"
+    },
+    {
         "full_name": "Sophie Perez",
         "email": "sophie.perez@example.com",
         "department": "SUPPORT"

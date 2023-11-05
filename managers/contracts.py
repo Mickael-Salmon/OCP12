@@ -5,11 +5,11 @@ It also includes permission checks to ensure that only authorized roles like 'AC
 """
 import typing
 from sqlalchemy.orm import Session
-from database.manager import Manager
+from managers.manager import Manager
 from models.contracts import Contract
 from models.employees import Department
-from authentification.decorators import login_required, permission_required
-from authentification.token import get_authenticated_user_id
+from accesscontrol.sec_sessions import login_required, permission_required
+from accesscontrol.jwt_token import get_authenticated_user_id
 
 class ContractsManager(Manager):
     """

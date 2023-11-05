@@ -2,7 +2,13 @@
 This conftest.py file is responsible for setting up the test environment.
 It defines pytest fixtures for reusable components and also configures the test database.
 """
-
+from accesscontrol.jwt_token import create_token, store_token, clear_token
+from managers.manager import Base
+from models import Base
+from models.employees import Employee, Department
+from models.clients import Client
+from models.contracts import Contract
+from models.events import Event
 import pytest
 from contextlib import contextmanager
 from sqlalchemy.orm import Session
@@ -23,7 +29,17 @@ __TEST_ENGINE = sqlalchemy.create_engine(
     f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@localhost/epicevents_test"
 )
 
-
+#Simple Fixture
+@pytest.fixture
+def simple_sales_employee() -> Employee:
+    """
+    Fixture for creating a basic sales employee.
+    """
+    return Employee(
+        full_name="John Sales",
+        email="john.sales@epicevents.co",
+        department=Department.SALES,
+    )
 # -----------------------------------
 # Database test data fixtures
 # -----------------------------------

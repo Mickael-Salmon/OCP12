@@ -36,8 +36,8 @@ def get_epicevents_path() -> Path:
     Returns the path of the EpicEvents directory on the user's disk.
     Creates the directory if it does not exist.
     """
-    appdata_path = Path(os.environ.get("appdata"))
-    epicevent_path = Path(appdata_path, "epicevents")
+    appdata_path = Path(os.environ.get("APPDATA"))
+    epicevent_path = Path(appdata_path, "session")
 
     if not epicevent_path.exists():
         os.mkdir(epicevent_path)

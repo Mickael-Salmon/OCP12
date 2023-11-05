@@ -6,9 +6,9 @@ The class includes methods to create, read, update, and delete Employee records,
 import typing
 from sqlalchemy.orm import Session
 
-from authentification.decorators import login_required, permission_required
+from accesscontrol.sec_sessions import login_required, permission_required
 from models.employees import Employee, Department
-from database.manager import Manager, engine
+from managers.manager import Manager, engine
 
 
 class EmployeeManager(Manager):

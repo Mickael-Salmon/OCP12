@@ -10,7 +10,7 @@ load_dotenv()
 database_url = os.getenv("DATABASE_URL")
 
 # Créer l'engine de la base de données
-engine = create_engine(database_url, echo=True)  # Mettre echo à False si tu ne veux pas de logs
+engine = create_engine(database_url, echo=True)  # Mettre echo à False pour annuler les logs
 
 # Créer une classe de session liée à cet engine
 Session = sessionmaker(bind=engine)
