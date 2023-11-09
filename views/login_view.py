@@ -6,10 +6,10 @@ def login_view():
     username = input("Nom d'utilisateur: ")
     password = input("Mot de passe: ")
     # Appelle le contrôleur pour vérifier ces informations
-    token = verify_user_credentials(username, password)
-    if token:
-        # Si authentification réussie, sauvegarde le token
-        save_token(token)
+    employee_id, token = verify_user_credentials(username, password)
+    if token and employee_id:
+        # Si authentification réussie, sauvegarde le token avec l'ID de l'employé
+        save_token(employee_id, token)
         print("Connexion réussie.")
     else:
         print("Identifiants incorrects.")
