@@ -6,9 +6,22 @@ The model specifies the 'department' field as an Enum, representing the departme
 """
 from models import Base  # Importing the base class for SQLAlchemy models
 from sqlalchemy.sql import func  # SQLAlchemy's SQL function library
-from sqlalchemy import Enum, Column, Integer, String, DateTime  # Importing column types
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum  # Importing column types
+from sqlalchemy.orm import relationship  # To define the relationship
 import enum  # Python's standard library for enum types
 import bcrypt  # Library for hashing passwords
+from datetime import datetime
+
+class UserSession(Base):
+    __tablename__ = 'user_sessions'
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('employees.id'), nullable=False)
+    token = Column(String(512), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    expires_at = Column(DateTime, nullable=False)
+
+    employee = relationship("Employee", back_populates="sessions")  # Link to the Employee model
 
 class Department(enum.Enum):  # Enum class to represent different departments
     """
@@ -62,6 +75,8 @@ class Employee(Base):  # Employee model class inheriting from Base
     """
     The department the employee belongs to. Values are constrained by the 'Department' enum.
     """
+    # Add a new relationship to link with the UserSession model
+    sessions = relationship("UserSession", back_populates="employee", cascade="all, delete-orphan")
 
     def set_password(self, password: str):
         """
