@@ -14,7 +14,7 @@ from sqlalchemy import (
     Boolean,
     ForeignKey,  # Importing column types
 )
-
+from sqlalchemy.orm import validates
 class Contract(Base):  # Contract model class inheriting from Base
     """
     This is the Contract model class. It defines the attributes and behaviors associated with
@@ -68,6 +68,16 @@ class Contract(Base):  # Contract model class inheriting from Base
     account_contact = relationship(
         "Employee",
     )
+    @validates('total_amount', 'to_be_paid')
+    def validate_amounts(self, key, amount):
+        """
+        Validate that the amounts are positive and to_be_paid does not exceed total_amount.
+        """
+        if not isinstance(amount, (int, float)) or amount < 0:
+            raise ValueError(f"{key} must be a positive number")
+        if key == 'to_be_paid' and amount > self.total_amount:
+            raise ValueError("to_be_paid cannot exceed total_amount")
+        return amount
     """
     Establishing a relationship with the Employee model for easier navigation.
     """
