@@ -1,11 +1,12 @@
 ﻿import jwt
+from sqlalchemy.sql import func
 from datetime import datetime, timedelta
 
 # Assure-toi d'utiliser la même clé secrète pour le test
 SECRET_KEY = "0c3675d17b501c4fdb32718dd19740d2"
 
 def create_token(user_id: int) -> str:
-    expiration_time = datetime.utcnow() + timedelta(hours=1)
+    expiration_time = func.now() + timedelta(hours=1)
     return jwt.encode(
         {"exp": expiration_time, "user_id": user_id},
         SECRET_KEY,

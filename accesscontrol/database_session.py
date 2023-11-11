@@ -109,6 +109,6 @@ def renew_session_jwt(session, session_id, new_jwt_token):
     user_session = session.query(UserSession).filter_by(id=session_id).first()
     if user_session:
         user_session.token = new_jwt_token
-        user_session.expires_at = datetime.utcnow() + timedelta(days=1)  # Update the expires_at time if needed
+        user_session.expires_at = func.now() + timedelta(days=1)  # Update the expires_at time if needed
         return True
     return False

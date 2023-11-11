@@ -12,7 +12,7 @@ def list_contracts_view(session):
     contract_controller.list_contracts()
 
 @with_db_session
-def add_contract_view(user_id, token):
+def add_contract_view(user_id, token, session):
     console.print("[bold cyan]Ajouter un nouveau contrat[/bold cyan]")
     total_amount = Prompt.ask("Entrez le montant total du contrat")
     client_id = Prompt.ask("Entrez l'ID du client pour le contrat")

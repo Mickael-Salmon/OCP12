@@ -1,4 +1,5 @@
 ﻿from models import Base
+from sqlalchemy.sql import func
 from sqlalchemy import Column, Integer, DateTime, String, ForeignKey
 from contextlib import closing
 from psycopg2.extras import RealDictCursor
@@ -27,8 +28,8 @@ class UserSession(Base):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('employees.id'), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    expires_at = Column(DateTime, default=datetime.utcnow() + timedelta(days=1))
+    created_at = Column(DateTime, default=func.now())
+    expires_at = Column(DateTime, default=func.now() + timedelta(days=1))
     token = Column(String, unique=True)
     employee = relationship("Employee", back_populates="sessions")
 
