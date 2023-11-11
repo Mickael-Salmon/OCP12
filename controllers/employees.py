@@ -1,6 +1,8 @@
 ﻿from models.employees import Employee
 from rich.console import Console
 from sqlalchemy import or_
+from sqlalchemy.exc import SQLAlchemyError
+from werkzeug.security import generate_password_hash
 
 class EmployeeController:
     def __init__(self, session):
@@ -22,32 +24,36 @@ class EmployeeController:
             self.console.print("[bold red]Employé non trouvé.[/bold red]")
         return employee
 
-    def create_employee(self, full_name, email, department, password="password"):
+    def create_employee(self, full_name, email, department, password):
+        new_employee = Employee(
+            full_name=full_name,
+            email=email,
+            department=department
+        )
+        new_employee.password_hash = generate_password_hash(password)
         try:
-            new_employee = Employee(
-                full_name=full_name,
-                email=email,
-                department=department
-            )
-            new_employee.set_password(password)  # Définir le mot de passe
             self.session.add(new_employee)
             self.session.commit()
             self.console.print("[bold green]Employé créé avec succès ![/bold green]")
             return new_employee
-        except Exception as e:
+        except SQLAlchemyError as e:
             self.session.rollback()
             self.console.print(f"[bold red]Erreur lors de la création de l'employé : {e}[/bold red]")
             raise
-
 
     def update_employee(self, employee_id, **kwargs):
         employee = self.session.query(Employee).get(employee_id)
         if employee:
             for attr, value in kwargs.items():
                 setattr(employee, attr, value)
-            self.session.commit()
-            self.console.print(f"[bold green]Employé mis à jour : ID {employee.id}[/bold green]")
-            return employee
+            try:
+                self.session.commit()
+                self.console.print(f"[bold green]Employé mis à jour : ID {employee.id}[/bold green]")
+                return employee
+            except SQLAlchemyError as e:
+                self.session.rollback()
+                self.console.print(f"[bold red]Erreur lors de la mise à jour de l'employé : {e}[/bold red]")
+                raise
         else:
             self.console.print("[bold red]Employé non trouvé pour mise à jour.[/bold red]")
             return None
@@ -56,17 +62,19 @@ class EmployeeController:
         employee = self.session.query(Employee).get(employee_id)
         if employee:
             self.session.delete(employee)
-            self.session.commit()
-            self.console.print(f"[bold green]Employé supprimé : ID {employee.id}[/bold green]")
+            try:
+                self.session.commit()
+                self.console.print(f"[bold green]Employé supprimé : ID {employee.id}[/bold green]")
+            except SQLAlchemyError as e:
+                self.session.rollback()
+                self.console.print(f"[bold red]Erreur lors de la suppression de l'employé : {e}[/bold red]")
+                raise
         else:
             self.console.print("[bold red]Employé non trouvé pour suppression.[/bold red]")
 
     def search_employees(self, search_query):
-        if search_query.isdigit():  # Si la recherche est un nombre, on cherche par ID.
-            employee_id = int(search_query)
-            return self.session.query(Employee).filter(Employee.id == employee_id).all()
-        else:  # Sinon, on cherche par nom en utilisant ILIKE.
-            search = f"%{search_query}%"
-            return self.session.query(Employee).filter(
-                or_(Employee.full_name.ilike(search), Employee.email.ilike(search))
-            ).all()
+        search = f"%{search_query}%"
+        employees = self.session.query(Employee).filter(
+            or_(Employee.full_name.ilike(search), Employee.email.ilike(search))
+        ).all()
+        return employees

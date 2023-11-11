@@ -1,5 +1,5 @@
 ﻿from sqlalchemy.orm import Session
-from models.employees import UserSession
+from models.user import UserSession
 from managers.manager import engine
 from cryptography.fernet import Fernet, InvalidToken
 import base64

@@ -2,7 +2,6 @@
 from rich.console import Console
 from accesscontrol.database_session import with_db_session
 from controllers.contracts import ContractController
-from controllers.clients import ClientController
 
 console = Console()
 
@@ -13,7 +12,7 @@ def list_contracts_view(session):
     contract_controller.list_contracts()
 
 @with_db_session
-def add_contract_view(session):
+def add_contract_view(user_id, token):
     console.print("[bold cyan]Ajouter un nouveau contrat[/bold cyan]")
     total_amount = Prompt.ask("Entrez le montant total du contrat")
     client_id = Prompt.ask("Entrez l'ID du client pour le contrat")
@@ -34,21 +33,25 @@ def update_contract_view(session):
     existing_contract = contract_controller.get_contract(contract_id)
 
     if existing_contract:
-        total_amount = Prompt.ask("Entrez le nouveau montant total du contrat", default=str(existing_contract.total_amount))
-        is_signed = Prompt.ask("Le contrat est-il signé ? (oui/non)", choices=["oui", "non"])
+        try:
+            # Demande le nouveau montant total du contrat et le convertit en float
+            total_amount = float(Prompt.ask("Entrez le nouveau montant total du contrat", default=str(existing_contract.total_amount)))
+            is_signed_str = Prompt.ask("Le contrat est-il signé ? (oui/non)", choices=["oui", "non"])
 
-        # Conversion de la réponse en booléen
-        is_signed = True if is_signed.lower() == 'oui' else False
+            # Conversion de la réponse en booléen
+            is_signed = True if is_signed_str.lower() == 'oui' else False
 
-        # Appel de la méthode update_contract du ContractController avec les nouvelles valeurs
-        updated_contract = contract_controller.update_contract(contract_id,
-                                                              total_amount=total_amount,
-                                                              is_signed=is_signed)
+            # Appel de la méthode update_contract du ContractController avec les nouvelles valeurs
+            updated_contract = contract_controller.update_contract(contract_id,
+                                                                total_amount=total_amount,
+                                                                is_signed=is_signed)
 
-        if updated_contract:
-            console.print(f"[bold green]Le contrat ID {contract_id} a été modifié avec succès ![/bold green]")
-        else:
-            console.print(f"[bold red]Une erreur s'est produite lors de la mise à jour du contrat.[/bold red]")
+            if updated_contract:
+                console.print(f"[bold green]Le contrat ID {contract_id} a été modifié avec succès ![/bold green]")
+            else:
+                console.print(f"[bold red]Une erreur s'est produite lors de la mise à jour du contrat.[/bold red]")
+        except ValueError as e:
+            console.print(f"[bold red]Erreur : {e}[/bold red]")
     else:
         console.print(f"[bold red]Le contrat ID {contract_id} n'a pas été trouvé.[/bold red]")
 

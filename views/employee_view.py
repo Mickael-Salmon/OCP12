@@ -2,7 +2,7 @@
 from rich.console import Console
 from accesscontrol.database_session import with_db_session
 from models.employees import Department
-from controllers.employees import EmployeeController  # Ceci devra être implémenté
+from controllers.employees import EmployeeController
 
 console = Console()
 

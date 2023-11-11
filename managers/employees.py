@@ -3,14 +3,11 @@ This file defines the EmployeeManager class which serves as the business logic l
 It extends the base Manager class and includes methods for CRUD operations on the 'Employee' table.
 The class includes methods to create, read, update, and delete Employee records, making sure that the right permissions are checked before performing certain operations.
 """
-import typing
 from sqlalchemy.orm import Session
-
-from accesscontrol.sec_sessions import login_required, permission_required
+from accesscontrol.sec_sessions import permission_required
 from models.employees import Employee, Department
-from managers.manager import Manager, engine
-
-
+from managers.manager import Manager
+import typing
 class EmployeeManager(Manager):
     """
     Manage the access to the ``Employee`` table, serving as the business logic layer for CRUD operations.
@@ -23,24 +20,22 @@ class EmployeeManager(Manager):
         """
         super().__init__(session=session, model=Employee)
 
-    @login_required
     def get(self, *args, **kwargs) -> typing.List[Employee]:
         """
         Retrieve one or more employee records that match the given conditions.
-        Requires the user to be logged in.
+        Requires the user to be authenticated.
         """
         return super().get(*args, **kwargs)
 
-    @login_required
     def all(self) -> typing.List[Employee]:
         """
         Retrieve all employee records from the database.
-        Requires the user to be logged in.
+        Requires the user to be authenticated.
         """
         return super().all()
 
     @permission_required(roles=[Department.ACCOUNTING])
-    def create(self, full_name: str, email: str, password: str, department: Department):
+    def create(self, full_name: str, email: str, password: str, department: Department) -> Employee:
         """
         Create a new employee record.
         Requires the user to have 'ACCOUNTING' department privileges.
@@ -51,11 +46,11 @@ class EmployeeManager(Manager):
             email=email,
             department=department,
         )
-        new_employee.set_password(password)
+        new_employee.set_password(password)  # Assumes that this method hashes the password
         return super().create(new_employee)
 
     @permission_required(roles=[Department.ACCOUNTING])
-    def update(self, *args, **kwargs):
+    def update(self, *args, **kwargs) -> Employee:
         """
         Update one or more employee records that match the given conditions.
         Requires the user to have 'ACCOUNTING' department privileges.
@@ -63,9 +58,9 @@ class EmployeeManager(Manager):
         return super().update(*args, **kwargs)
 
     @permission_required(roles=[Department.ACCOUNTING])
-    def delete(*args, **kwargs):
+    def delete(self, *args, **kwargs) -> None:
         """
         Delete one or more employee records that match the given conditions.
         Requires the user to have 'ACCOUNTING' department privileges.
         """
-        return super().delete(**kwargs)
+        return super().delete(*args, **kwargs)

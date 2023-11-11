@@ -1,6 +1,6 @@
 ﻿# main.py
 from views.menu import main as menu_main
-
+from managers.manager import create_tables
 import sentry_sdk
 
 sentry_sdk.init(
@@ -15,4 +15,5 @@ sentry_sdk.init(
 )
 
 if __name__ == "__main__":
+    create_tables()
     menu_main()
