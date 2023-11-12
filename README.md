@@ -443,8 +443,7 @@ Le backend est réalisé en Python 3.12 et utilise les librairies suivantes:
 | `managers/`                       | `clients.py`, `contracts.py`, `employees.py`, `events.py`, `__init__.py`, `manager.py`                                                                  |
 | `models/`                         | `clients.py`, `contracts.py`, `employees.py`, `events.py`, `__init__.py`, `user.py`                        |
 | `README.md`                       |                                                                                                            |
-| `requirements.txt`                |                                                                                                            |
-| `session/`                        |                                                                                                            |
+| `requirements.txt`                |                                                            |
 | `tests/`                          | `db/test_clients.py`, `db_create_tables.py`, `db_delete_tables.py`, `db_init.py`, `db_test_check_tables.py`, `db_test_connection.py`, `factories/`, `test_accounting_contract_Create.py`, `test_createEmployee.py`, `unit/settings_pytest.py`, `unit/test_create_customer.py`, `unit/test_createEmployee.py` |
 | `utils/`                          | `database/clients_data.json`, `database/contracts_data.json`, `database/database.py`, `database/db_create_secret_key.py`, `database/db_init.py`, `database/employees_data.json`, `database/events_data_contact_id.json`, `database/events_data.json`, `database/login.py`, `database/logout.py`, `database/register.py`, `Fernet_cryptokey_gen.py`, `__init__.py`, `reset_password_user.py`, `token_storage.py` |
 | `views/`                          | `client_view.py`, `contract_view.py`, `employee_view.py`, `event_view.py`, `__init__.py`, `login_view.py`, `logout_view.py`, `menu.py`, `report_view.py` |
