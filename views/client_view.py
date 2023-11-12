@@ -1,9 +1,9 @@
 ﻿from rich.prompt import Prompt
 from rich.console import Console
+from rich.table import Table
 from accesscontrol.database_session import with_db_session
 from controllers.clients import ClientController
-from rich.console import Console
-from rich.table import Table
+import re
 
 console = Console()
 
@@ -43,27 +43,36 @@ def update_client_view(session):
         # Suite de la mise à jour...
         full_name = Prompt.ask("Entrez le nouveau nom complet du client", default=existing_client.full_name)
         email = Prompt.ask("Entrez le nouvel email du client", default=existing_client.email)
-        phone = Prompt.ask("Entrez le nouveau téléphone du client", default=existing_client.phone)
+        phone = existing_client.phone
+        phone_valid = False
+
+        while not phone_valid:
+            phone = Prompt.ask("Entrez le nouveau téléphone du client", default=phone)
+            if re.match(r"^(\d{3}-\d{3}-\d{4}|\d{10})$", phone.replace(" ", "")):
+                phone_valid = True
+            else:
+                console.print("[bold red]Numéro de téléphone invalide. Veuillez saisir le numéro au format 123-456-7890 ou 1234567890.[/bold red]")
+
         enterprise = Prompt.ask("Entrez le nouveau nom de l'entreprise du client", default=existing_client.enterprise)
         sales_contact_id = Prompt.ask("Entrez le nouvel ID du contact commercial", default=str(existing_client.sales_contact_id))
 
-        # Validation de l'ID du contact commercial avant la mise à jour
         if not sales_contact_id.isdigit() or int(sales_contact_id) <= 0:
             console.print("[bold red]L'ID du contact commercial est invalide.[/bold red]")
             return
 
-        # Appel de la méthode update_client du ClientController avec les nouvelles valeurs
-        updated_client = client_controller.update_client(client_id,
-                                                        full_name=full_name,
-                                                        email=email,
-                                                        phone=phone,
-                                                        enterprise=enterprise,
-                                                        sales_contact_id=sales_contact_id)
-
-        if updated_client:
-            console.print(f"[bold green]Le client ID {client_id} a été modifié avec succès ![/bold green]")
-        else:
-            console.print(f"[bold red]Une erreur s'est produite lors de la mise à jour du client.[/bold red]")
+        try:
+            updated_client = client_controller.update_client(client_id,
+                                                            full_name=full_name,
+                                                            email=email,
+                                                            phone=phone,
+                                                            enterprise=enterprise,
+                                                            sales_contact_id=sales_contact_id)
+            if updated_client:
+                console.print(f"[bold green]Le client ID {client_id} a été modifié avec succès ![/bold green]")
+            else:
+                console.print(f"[bold red]Une erreur s'est produite lors de la mise à jour du client.[/bold red]")
+        except ValueError as e:
+            console.print(f"[bold red]Erreur lors de la mise à jour du client : {e}[/bold red]")
     else:
         console.print(f"[bold red]Le client ID {client_id} n'a pas été trouvé.[/bold red]")
 
@@ -100,21 +109,25 @@ def search_client_view(session):
         console.print("[bold red]Aucun client correspondant à la recherche.[/bold red]")
 
 @with_db_session
-def show_clients(client_controller):
+def list_clients_view(session):
+    console.print("[bold cyan]Liste des clients[/bold cyan]")
+    client_controller = ClientController(session)
     clients = client_controller.list_clients()
-    table = Table(show_header=True, header_style="bold blue")
-    table.add_column("ID")
+
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("ID", style="dim")
     table.add_column("Nom")
     table.add_column("Email")
     table.add_column("Téléphone")
+    table.add_column("Entreprise")
 
     for client in clients:
         table.add_row(
             str(client.id),
-            client.name,
+            client.full_name,
             client.email,
-            client.phone
+            client.phone,
+            client.enterprise
         )
 
-    console = Console()
     console.print(table)

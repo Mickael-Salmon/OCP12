@@ -1,5 +1,6 @@
 ﻿from rich.prompt import Prompt
 from rich.console import Console
+from rich.table import Table
 from accesscontrol.database_session import with_db_session
 from controllers.events import EventController
 from datetime import datetime
@@ -18,7 +19,31 @@ def validate_date(date_str):
 def list_events_view(session):
     console.print("[bold cyan]Liste des événements[/bold cyan]")
     event_controller = EventController(session)
-    event_controller.list_events()
+    events = event_controller.list_events()
+
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("ID", style="dim", width=12)
+    table.add_column("Client")
+    table.add_column("Début", justify="right")
+    table.add_column("Fin", justify="right")
+    table.add_column("Lieu")
+    table.add_column("Participants", justify="right")
+
+    for event in events:
+        client_name = event.contract.client.full_name if event.contract and event.contract.client else "Client inconnu"
+        start_date = event.start_date.strftime("%Y-%m-%d %H:%M")
+        end_date = event.end_date.strftime("%Y-%m-%d %H:%M")
+        table.add_row(
+            str(event.id),
+            client_name,
+            start_date,
+            end_date,
+            event.location,
+            str(event.attendees_count)
+        )
+
+    console.print(table)
+
 
 @with_db_session
 def add_event_view(session):

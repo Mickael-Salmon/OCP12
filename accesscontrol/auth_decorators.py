@@ -4,6 +4,8 @@ from models.user import UserSession
 from accesscontrol.jwt_token import decode_token, create_token
 from managers.manager import engine
 from models.employees import Department, Employee
+from rich.console import Console
+console = Console()
 
 # Utilitaire pour créer une session de base de données
 def get_db_session():
@@ -45,6 +47,7 @@ def admin_required(f):
     def decorated_function(*args, **kwargs):
         user = kwargs.get('user')
         if not user or user.department != Department.ADMIN:
-            raise PermissionError("Admin rights required.")
+            console.print("Accès non autorisé ! Merci de contacter l'administrateur.", style="bold red")
+            return  # Ici, on arrête l'exécution et on retourne au menu principal
         return f(*args, **kwargs)
     return decorated_function

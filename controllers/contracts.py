@@ -1,6 +1,7 @@
 ﻿from models.clients import Client
 from models.contracts import Contract
 from rich.console import Console
+from rich.table import Table
 from sqlalchemy import or_, and_
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -10,12 +11,7 @@ class ContractController:
         self.console = Console()
 
     def list_contracts(self):
-        contracts = self.session.query(Contract).all()
-        self.console.print("[bold green]Liste des contrats :[/bold green]")
-        for contract in contracts:
-            client_name = contract.client.full_name if contract.client else "Client inconnu"
-            self.console.print(f"{contract.id} : {client_name} - {contract.total_amount} - {'Signé' if contract.is_signed else 'Non signé'}")
-        return contracts
+        return self.session.query(Contract).all()
 
     def get_contract(self, contract_id):
         contract = self.session.query(Contract).get(contract_id)

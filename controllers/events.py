@@ -12,12 +12,7 @@ class EventController:
         self.console = Console()
 
     def list_events(self):
-        events = self.session.query(Event).all()
-        self.console.print("[bold green]Liste des événements :[/bold green]")
-        for event in events:
-            client_name = event.client.full_name if event.client else "Client inconnu"
-            self.console.print(f"ID: {event.id} | Client: {client_name} | Début: {event.start_date} | Fin: {event.end_date} | Lieu: {event.location}")
-        return events
+        return self.session.query(Event).all()
 
     def get_event(self, event_id):
         event = self.session.query(Event).get(event_id)

@@ -10,11 +10,7 @@ class ClientController:
         self.console = Console()
 
     def list_clients(self):
-        clients = self.session.query(Client).all()
-        self.console.print("[bold green]Liste des clients :[/bold green]")
-        for client in clients:
-            self.console.print(f"{client.id} : {client.full_name} - {client.email}")
-        return clients
+        return self.session.query(Client).all()
 
     def get_client(self, client_id):
         client = self.session.query(Client).get(client_id)

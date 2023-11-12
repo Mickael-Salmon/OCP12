@@ -73,8 +73,18 @@ class EmployeeController:
             self.console.print("[bold red]Employé non trouvé pour suppression.[/bold red]")
 
     def search_employees(self, search_query):
-        search = f"%{search_query}%"
-        employees = self.session.query(Employee).filter(
-            or_(Employee.full_name.ilike(search), Employee.email.ilike(search))
-        ).all()
+        try:
+            search_query_int = int(search_query)
+            employees = self.session.query(Employee).filter(
+                or_(
+                    Employee.full_name.ilike(f"%{search_query}%"),
+                    Employee.id == search_query_int
+                )
+            ).all()
+        except ValueError:  # Si la conversion en int échoue, ce n'est pas un ID
+            employees = self.session.query(Employee).filter(
+                Employee.full_name.ilike(f"%{search_query}%")
+            ).all()
         return employees
+
+

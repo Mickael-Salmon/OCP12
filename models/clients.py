@@ -89,11 +89,13 @@ class Client(Base):  # Client model class inheriting from Base
     @validates('phone')
     def validate_phone(self, key, phone):
         """
-        Validate the format of the phone number.
+        Validate the format of the phone number to match 123-456-7890 or 1234567890.
         """
-        if not re.match(r"^\+?\d{10,15}$", phone):
-            raise ValueError(f"Invalid phone number: {phone}")
+        if not re.match(r"^(?:\d{3}-\d{3}-\d{4}|\d{10})$", phone):
+            print(f"Numéro de téléphone invalide : {phone}. Veuillez saisir le numéro au format 123-456-7890 ou 1234567890.")
+            return None  # ou retourner une valeur par défaut ou demander une nouvelle saisie
         return phone
+
 
     # Add a method to handle insertion and update operations with error handling
     def insert_or_update(self, session):

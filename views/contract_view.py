@@ -1,15 +1,37 @@
 ﻿from rich.prompt import Prompt
 from rich.console import Console
+from rich.table import Table
 from accesscontrol.database_session import with_db_session
 from controllers.contracts import ContractController
+from models.contracts import Contract
 
 console = Console()
 
 @with_db_session
 def list_contracts_view(session):
     console.print("[bold cyan]Liste des contrats[/bold cyan]")
-    contract_controller = ContractController(session)
-    contract_controller.list_contracts()
+    contracts = session.query(Contract).all()
+
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("ID", style="dim")
+    table.add_column("Client")
+    table.add_column("Montant total", justify="right")
+    table.add_column("À payer", justify="right")
+    table.add_column("Signé")
+
+    for contract in contracts:
+        client_name = contract.client.full_name if contract.client else "Client inconnu"
+        signed_status = "Oui" if contract.is_signed else "Non"
+        table.add_row(
+            str(contract.id),
+            client_name,
+            f"{contract.total_amount:.2f} €",
+            f"{contract.to_be_paid:.2f} €",
+            signed_status
+        )
+
+    console.print(table)
+
 
 @with_db_session
 def add_contract_view(user_id, token, session):

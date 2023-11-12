@@ -17,12 +17,18 @@ def add_employee_view(session):
     console.print("[bold cyan]Ajouter un nouvel employé[/bold cyan]")
     full_name = Prompt.ask("Entrez le nom complet de l'employé")
     email = Prompt.ask("Entrez l'email de l'employé")
-    department = Prompt.ask("Entrez le département de l'employé", choices=[d.value for d in Department])
+    department_choices = [d.value for d in Department]
+    department = Prompt.ask("Entrez le département de l'employé", choices=department_choices)
+    password = Prompt.ask("Entrez le mot de passe de l'employé", password=True)
+
+    # Convertir le département en majuscules pour correspondre à l'énumération
     department = department.upper()
+
     employee_controller = EmployeeController(session)
-    employee_controller.create_employee(full_name, email, department)
+    employee_controller.create_employee(full_name, email, department, password)
 
     console.print("[bold green]L'employé a été ajouté avec succès ![/bold green]")
+
 
 @with_db_session
 def update_employee_view(session):
@@ -34,7 +40,11 @@ def update_employee_view(session):
     if existing_employee:
         full_name = Prompt.ask("Entrez le nouveau nom complet de l'employé", default=existing_employee.full_name)
         email = Prompt.ask("Entrez le nouvel email de l'employé", default=existing_employee.email)
-        department = Prompt.ask("Entrez le nouveau département de l'employé", choices=[d.value for d in Department], default=existing_employee.department.value)
+        department_choices = [d.value for d in Department]
+        department = Prompt.ask("Entrez le nouveau département de l'employé", choices=department_choices, default=existing_employee.department.value.upper())
+
+        # Assurez-vous que la valeur saisie est convertie en majuscules pour correspondre à l'énumération
+        department = department.upper() if department.lower() in [d.value.lower() for d in Department] else existing_employee.department.value
 
         # Appel de la méthode update_employee du EmployeeController avec les nouvelles valeurs
         updated_employee = employee_controller.update_employee(employee_id,
