@@ -513,4 +513,4 @@ Le backend est réalisé en Python 3.12 et utilise les librairies suivantes:
 - [DateTime](https://docs.python.org/3/library/datetime.html)
 - [Bcrypt](https://pypi.org/project/bcrypt/)
 - [Cryptography](https://cryptography.io/en/latest/)
-
+- [Fedora - Installation et configuration PostgreSQL Server](https://doc.fedora-fr.org/wiki/Installation_et_configuration_de_PostgreSQL)
