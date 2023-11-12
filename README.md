@@ -53,11 +53,11 @@ déroulé de l’événement.
 
 # Sécurité et top 10 OWASP
 
--   **Authentification Robuste**: L'application implémente une authentification des utilisateurs, ce qui est crucial pour protéger contre les risques tels que l'**A01:2021 - Broken Access Control**.
+-   **Authentification Robuste**: L'application implémente une authentification des utilisateurs pour protéger contre les risques tels que l'**A01:2021 - Broken Access Control**.
 
--   **Gestion de Session Sécurisée**: Les tokens JWT sont utilisés pour maintenir l'état de connexion, ce qui aide à prévenir les problèmes liés à l'**A02:2021 - Cryptographic Failures**.
+-   **Gestion de Session Sécurisée**: Les tokens JWT sont utilisés pour maintenir l'état de connexion pour aide à prévenir les problèmes liés à l'**A02:2021 - Cryptographic Failures**.
 
--   **Stockage Sécurisé des Mots de Passe**: Les mots de passe sont hachés et salés avec `bcrypt`, une bonne pratique pour contrer l'**A02:2021 - Cryptographic Failures**.
+-   **Stockage Sécurisé des Mots de Passe**: Les mots de passe sont hachés et salés avec `bcrypt` pour contrer l'**A02:2021 - Cryptographic Failures**.
 
 -   **Contrôle d'Accès Basé sur les Rôles**: Des décorateurs tels que `@admin_required` et `@authenticated` sont utilisés pour restreindre l'accès à certaines fonctionnalités, relevant de l'**A01:2021 - Broken Access Control**.
 
@@ -68,7 +68,8 @@ déroulé de l’événement.
 -   **HTTPS/SSL**: Bien que non mentionné explicitement dans le code, l'utilisation de protocoles sécurisés pour la communication est essentielle pour l'**A02:2021 - Cryptographic Failures**. L'application s'exécutant uniquement depuis le terminal, il est envisageable d'effectuer une connexion SSH depuis un ordinateur distant pour accéder à l'application, profitant ainsi d'une connexion sécurisée via les paires de clés privées/publiques associées au fonctionnement de SSH.
 
 -   **Journalisation et Surveillance**: L'application implémente une  journalisation des erreurs avec `Sentry`qui pourrait être étendue pour surveiller les activités suspectes, pertinent pour l'**A08:2021 - Software and Data Integrity Failures**.
--   **Protection contre les injesctions SQL**: L'application utilise des requêtes paramétrées pour prévenir les injections SQL, ce qui est une bonne pratique pour lutter contre l'**A01:2021 - Broken Access Control** et le code utilise l'ORM SQLAlchemy, qui, par défaut, aide à prévenir les injections SQL en utilisant des requêtes paramétrées plutôt que de construire des requêtes SQL à partir de chaînes concaténées. C'est une mesure de protection essentielle contre l'**A03:2021-Injection** du Top 10 OWASP.
+
+-   **Protection contre les injesctions SQL**: L'application utilise des requêtes paramétrées pour prévenir les injections SQL, ce qui est une bonne pratique pour lutter contre l'**A01:2021 - Broken Access Control** et le code utilise l'ORM SQLAlchemy, qui, par défaut, aide à prévenir les injections SQL en utilisant des requêtes paramétrées plutôt que de construire des requêtes SQL à partir de chaînes concaténées. C'est une mesure de protection supplémentaire contre l'**A03:2021-Injection** du Top 10 OWASP.
 -   **Le système de gestion des droits d'accès** (`accesscontrol`) dans l'application respecte le principe du moindre privilège, qui est une pratique de sécurité fondamentale, correspondant à l'**A05:2021-Security Misconfiguration** du Top 10 OWASP. Voici ce qui a été implémenté :
 -   **Authentification et gestion des sessions** : Les utilisateurs doivent se connecter pour accéder à l'application, garantissant que seules les personnes authentifiées peuvent interagir avec le système.
 -   **Contrôles d'accès basés sur les rôles** (`@admin_required`, `@authenticated`): Les décorateurs vérifient les rôles et les permissions avant d'accéder à certaines fonctions, s'assurant que les utilisateurs ne peuvent exécuter que les actions autorisées.
@@ -84,9 +85,7 @@ déroulé de l’événement.
     | Update    | Mettre à jour ou modifier des données existantes.       |
     | Delete    | Supprimer des données existantes.                      |
 
-- **Gestion des erreurs** : Les erreurs sont gérées correctement pour ne pas exposer des détails sensibles, ce qui correspond à l'**A04:2021 - Insecure Design**.
-
-- **Modèles SQLAlchemy** : Les models définissent les droits d'accès aux données pour les utilisateurs, ce qui est essentiel pour lutter contre l'**A01:2021 - Broken Access Control**.
+- **Modèles SQLAlchemy** : Les models définissent les droits d'accès aux données pour les utilisateurs afin d'aider à lutter contre l'**A01:2021 - Broken Access Control**.
 - **Utiliser une table `user_sessions`** sur la BD pour gérer les tokens de session pour adresser les points suivants :
 - **Contrôle de session centralisé** : Les sessions peuvent être gérées de manière centralisée, ce qui permet aux administrateurs de révoquer l'accès immédiatement si nécessaire.
 - **Minimisation des risques de vol de tokens** : Stocker les tokens côté serveur au lieu de les laisser sur le disque dur de l'utilisateur réduit le risque que ces tokens soient volés par des malwares ou fuités à travers des attaques XSS.
