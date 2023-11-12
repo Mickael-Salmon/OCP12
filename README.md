@@ -429,6 +429,9 @@ Ici, `load_dotenv()` lit le fichier `.env` et charge les variables pour les util
 # Démonstration
 
 Dans le cadre de ce projet, certains composants sont volontairement exclus de synchronisation avec GitHub comme le fichier .env pour illustrer une bonne pratique consistant à ne pas partager les informations sensibles sur un dépôt public.
+La base de donnée est également exclue de la synchronisation avec GitHub pour des raisons de sécurité. Un backup est disponible sur demande généré avec la commande suivante: `pg_dump -U postgres -W -F c -d epic_events > backup_epicevents.backup
+`
+
 
 # FRONTEND
 
