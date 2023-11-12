@@ -1,5 +1,13 @@
-# OCP12
-# Projet démarré
+<p align="center">
+<img src="https://legacy.python.org/community/logos/python-logo-master-v3-TM.png">
+</p>
+
+# Bienvenue !
+## Vous trouverez ici le Projet 12 du parcours Développeur d'application - Python 👋
+
+# Développez une architecture back-end sécurisée avec Python et SQL
+
+![Epic Events](https://user.oc-static.com/upload/2023/07/26/16903799358611_P12-02.png)
 
 # Contexte
 
@@ -378,6 +386,61 @@ Conformément au cahier de charges, la partie cliente est entièrement réalisé
 
 Le backend est réalisé en Python 3.12 et utilise les librairies suivantes:
 
-- SQLAlchemy
-- Dotenv
-- Rich
+| Dépendance       | Version     |
+|------------------|-------------|
+| bcrypt           | 4.0.1       |
+| certifi          | 2023.7.22   |
+| cffi             | 1.16.0      |
+| cryptography     | 41.0.5      |
+| DateTime         | 5.2         |
+| factory-boy      | 3.3.0       |
+| Faker            | 19.13.0     |
+| greenlet         | 3.0.1       |
+| iniconfig        | 2.0.0       |
+| Jinja2           | 3.1.2       |
+| markdown-it-py   | 3.0.0       |
+| MarkupSafe       | 2.1.3       |
+| mdurl            | 0.1.2       |
+| packaging        | 23.2        |
+| pluggy           | 1.3.0       |
+| psycopg2-binary  | 2.9.9       |
+| pwinput          | 1.0.3       |
+| pycparser        | 2.21        |
+| Pygments         | 2.16.1      |
+| PyJWT            | 2.8.0       |
+| PyMySQL          | 1.1.0       |
+| pytest           | 7.4.3       |
+| pytest-html      | 4.1.1       |
+| pytest-metadata  | 3.0.0       |
+| python-dateutil  | 2.8.2       |
+| python-dotenv    | 1.0.0       |
+| pytz             | 2023.3.post1|
+| rich             | 13.6.0      |
+| sentry-sdk       | 1.34.0      |
+| setuptools       | 68.2.2      |
+| six              | 1.16.0      |
+| SQLAlchemy       | 2.0.23      |
+| typing_extensions| 4.8.0       |
+| urllib3          | 2.0.7       |
+| Werkzeug         | 3.0.1       |
+| zope.interface   | 6.1         |
+
+
+# Structure de dossiers
+
+| Dossier/Fichier                   | Sous-Dossiers/Fichiers                                                                                     |
+|-----------------------------------|------------------------------------------------------------------------------------------------------------|
+| `accesscontrol/`                  | `auth_decorators.py`, `database_session.py`, `env_variables.py`, `functionnalities.py`, `__init__.py`, `jwt_token.py`, `load_current_user.py`, `sec_sessions.py`, `test_jwt_token.py` |
+| `conftest.py`                     |                                                                                                            |
+| `controllers/`                    | `authentication_controller.py`, `clients.py`, `contracts.py`, `employees.py`, `events.py`, `__init__.py`, `main_controller.py`, `reports.py` |
+| `factories/`                      | `clientFactory.py`, `contractFactory.py`, `employeeFactory.py`, `__init__.py`                              |
+| `main.py`                         |                                                                                                            |
+| `managers/`                       | `clients.py`, `contracts.py`, `employees.py`, `events.py`, `__init__.py`, `manager.py`                     |
+| `migrations/`                     |                                                                                                            |
+| `models/`                         | `clients.py`, `contracts.py`, `employees.py`, `events.py`, `__init__.py`, `user.py`                        |
+| `README.md`                       |                                                                                                            |
+| `requirements.txt`                |                                                                                                            |
+| `session/`                        |                                                                                                            |
+| `tests/`                          | `db/test_clients.py`, `db_create_tables.py`, `db_delete_tables.py`, `db_init.py`, `db_test_check_tables.py`, `db_test_connection.py`, `factories/`, `test_accounting_contract_Create.py`, `test_createEmployee.py`, `unit/settings_pytest.py`, `unit/test_create_customer.py`, `unit/test_createEmployee.py` |
+| `utils/`                          | `database/clients_data.json`, `database/contracts_data.json`, `database/database.py`, `database/db_create_secret_key.py`, `database/db_init.py`, `database/employees_data.json`, `database/events_data_contact_id.json`, `database/events_data.json`, `database/login.py`, `database/logout.py`, `database/register.py`, `Fernet_cryptokey_gen.py`, `__init__.py`, `reset_password_user.py`, `token_storage.py` |
+| `views/`                          | `client_view.py`, `contract_view.py`, `employee_view.py`, `event_view.py`, `__init__.py`, `login_view.py`, `logout_view.py`, `menu.py`, `report_view.py` |
