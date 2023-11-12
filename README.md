@@ -358,6 +358,11 @@ EPICEVENTS_SK=mySecretKey
 
 Ici, `username` et `password` sont ceux définis lors de la création de l'utilisateur PostgreSQL, et `dbname` est le nom de la base de données créée précédememnt.
 
+### Pour simplifier l'installation des dépendances nécessaires au projet
+
+``` Shell
+pip install -r requirements.txt
+```
 
 ### Charger les variables d'environnement dans l'application
 
