@@ -51,6 +51,49 @@ plateforme et le département gestion désigne un membre du
 département support qui sera responsable de l’organisation et du
 déroulé de l’événement.
 
+# Sécurité et top 10 OWASP
+
+-   **Authentification Robuste**: L'application implémente une authentification des utilisateurs, ce qui est crucial pour protéger contre les risques tels que l'**A01:2021 - Broken Access Control**.
+
+-   **Gestion de Session Sécurisée**: Les tokens JWT sont utilisés pour maintenir l'état de connexion, ce qui aide à prévenir les problèmes liés à l'**A02:2021 - Cryptographic Failures**.
+
+-   **Stockage Sécurisé des Mots de Passe**: Les mots de passe sont hachés avec `bcrypt`, une bonne pratique pour contrer l'**A02:2021 - Cryptographic Failures**.
+
+-   **Contrôle d'Accès Basé sur les Rôles**: Des décorateurs tels que `@admin_required` et `@authenticated` sont utilisés pour restreindre l'accès à certaines fonctionnalités, relevant de l'**A01:2021 - Broken Access Control**.
+
+-   **Validation des Entrées Utilisateur**: Le code utilise des validations pour les champs tels que les emails, les numéros de téléphone et force une complexité de mots de passe ce qui peut contribuer à atténuer les risques d'**A03:2021 - Injection**.
+
+-   **Gestion des Erreurs**: Les erreurs sont gérées correctement pour ne pas exposer des détails sensibles, ce qui correspond à l'**A04:2021 - Insecure Design**.
+
+-   **HTTPS/SSL**: Bien que non mentionné explicitement dans le code, l'utilisation de protocoles sécurisés pour la communication est essentielle pour l'**A02:2021 - Cryptographic Failures**.
+
+-   **Journalisation et Surveillance**: L'application implémente une  journalisation des erreurs avec `Sentry`qui pourrait être étendue pour surveiller les activités suspectes, pertinent pour l'**A08:2021 - Software and Data Integrity Failures**.
+-   **Protection contre les injesctions SQL**: L'application utilise des requêtes paramétrées pour prévenir les injections SQL, ce qui est une bonne pratique pour lutter contre l'**A01:2021 - Broken Access Control** et le code utilise l'ORM SQLAlchemy, qui, par défaut, aide à prévenir les injections SQL en utilisant des requêtes paramétrées plutôt que de construire des requêtes SQL à partir de chaînes concaténées. C'est une mesure de protection essentielle contre l'**A03:2021-Injection** du Top 10 OWASP.
+-   **Le système de gestion des droits d'accès** (`accesscontrol`) dans l'application respecte le principe du moindre privilège, qui est une pratique de sécurité fondamentale, correspondant à l'**A05:2021-Security Misconfiguration** du Top 10 OWASP. Voici ce qui a été implémenté :
+-   **Authentification et gestion des sessions** : Les utilisateurs doivent se connecter pour accéder à l'application, garantissant que seules les personnes authentifiées peuvent interagir avec le système.
+-   **Contrôles d'accès basés sur les rôles** (`@admin_required`, `@authenticated`): Les décorateurs vérifient les rôles et les permissions avant d'accéder à certaines fonctions, s'assurant que les utilisateurs ne peuvent exécuter que les actions autorisées.
+- **Permissions restreintes** : Les actions sont limitées en fonction des rôles de l'utilisateur, par exemple, seuls les administrateurs peuvent accéder aux fonctions d'administration des employés.
+- **Gestion des tokens JWT** : L'application utilise des tokens JWT pour gérer les sessions, limitant l'accès aux utilisateurs avec un token valide.
+- **Gestion des mots de passe** : Les mots de passe sont hachés avec `bcrypt`, une bonne pratique pour contrer l'**A02:2021 - Cryptographic Failures**.
+- **Le CRUD a été implémenté** via les models : CRUD est un acronyme pour Create, Read, Update, Delete, qui sont les quatre opérations de base pour la persistance des données.
+
+    | Operation | Description                                      |
+    |-----------|--------------------------------------------------|
+    | Create    | Créer de nouvelles entrées dans la base de données.     |
+    | Read      | Lire ou récupérer des données existantes.               |
+    | Update    | Mettre à jour ou modifier des données existantes.       |
+    | Delete    | Supprimer des données existantes.                      |
+
+- **Gestion des erreurs** : Les erreurs sont gérées correctement pour ne pas exposer des détails sensibles, ce qui correspond à l'**A04:2021 - Insecure Design**.
+
+- **Modèles SQLAlchemy** : Les models définissent les droits d'accès aux données pour les utilisateurs, ce qui est essentiel pour lutter contre l'**A01:2021 - Broken Access Control**.
+- **Utiliser une table `user_sessions`** sur la BD pour gérer les tokens de session pour adresser les points suivants :
+- **Contrôle de session centralisé** : Les sessions peuvent être gérées de manière centralisée, ce qui permet aux administrateurs de révoquer l'accès immédiatement si nécessaire.
+- **Minimisation des risques de vol de tokens** : Stocker les tokens côté serveur au lieu de les laisser sur le disque dur de l'utilisateur réduit le risque que ces tokens soient volés par des malwares ou fuités à travers des attaques XSS.
+- **Gestion fine des accès** : Permet d'implémenter des stratégies de sécurité telles que l'expiration de session ou des vérifications de sécurité supplémentaires pour des actions sensibles.Nous avons implémenté le login, logout et expiration de session.
+- **Conformité aux bonnes pratiques de sécurité** : Respecte le principe de moindre privilège et s'aligne avec les recommandations OWASP pour la gestion des sessions et des authentifications.
+
+
 # Estimation de livraison
 
 L’application CRM doit être livrée dans deux mois.
