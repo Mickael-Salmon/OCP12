@@ -440,8 +440,7 @@ Le backend est réalisé en Python 3.12 et utilise les librairies suivantes:
 | `controllers/`                    | `authentication_controller.py`, `clients.py`, `contracts.py`, `employees.py`, `events.py`, `__init__.py`, `main_controller.py`, `reports.py` |
 | `factories/`                      | `clientFactory.py`, `contractFactory.py`, `employeeFactory.py`, `__init__.py`                              |
 | `main.py`                         |                                                                                                            |
-| `managers/`                       | `clients.py`, `contracts.py`, `employees.py`, `events.py`, `__init__.py`, `manager.py`                     |
-| `migrations/`                     |                                                                                                            |
+| `managers/`                       | `clients.py`, `contracts.py`, `employees.py`, `events.py`, `__init__.py`, `manager.py`                                                                  |
 | `models/`                         | `clients.py`, `contracts.py`, `employees.py`, `events.py`, `__init__.py`, `user.py`                        |
 | `README.md`                       |                                                                                                            |
 | `requirements.txt`                |                                                                                                            |
