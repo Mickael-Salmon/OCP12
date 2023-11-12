@@ -1,4 +1,6 @@
 ﻿.env
+.vscode/
+.pytest_cache/
 .venv/
 __pycache__
 __init.py__
