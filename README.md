@@ -364,9 +364,13 @@ sudo dnf install pgadmin4
 ### Dans le répertoire du projet, crée un environnement virtuel:
 
 
-    ``` Python
-    python3 -m venv .venv
-    ```
+``` Python
+python3 -m venv .venv
+```
+ou
+``` Python
+virtualenv .venv
+```
 
 ### Activer l'environnement:
 
