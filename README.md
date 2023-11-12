@@ -447,3 +447,20 @@ Le backend est réalisé en Python 3.12 et utilise les librairies suivantes:
 | `tests/`                          | `db/test_clients.py`, `db_create_tables.py`, `db_delete_tables.py`, `db_init.py`, `db_test_check_tables.py`, `db_test_connection.py`, `factories/`, `test_accounting_contract_Create.py`, `test_createEmployee.py`, `unit/settings_pytest.py`, `unit/test_create_customer.py`, `unit/test_createEmployee.py` |
 | `utils/`                          | `database/clients_data.json`, `database/contracts_data.json`, `database/database.py`, `database/db_create_secret_key.py`, `database/db_init.py`, `database/employees_data.json`, `database/events_data_contact_id.json`, `database/events_data.json`, `database/login.py`, `database/logout.py`, `database/register.py`, `Fernet_cryptokey_gen.py`, `__init__.py`, `reset_password_user.py`, `token_storage.py` |
 | `views/`                          | `client_view.py`, `contract_view.py`, `employee_view.py`, `event_view.py`, `__init__.py`, `login_view.py`, `logout_view.py`, `menu.py`, `report_view.py` |
+
+# Références :
+- [OpenClassrooms](https://openclassrooms.com/fr/paths/68-developpeur-dapplication-python)
+- [PSQL](https://www.postgresql.org/docs/current/app-psql.html)
+- [PgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/index.html)
+- [Rich](https://rich.readthedocs.io/en/latest/)
+- [SQLAlchemy](https://docs.sqlalchemy.org/en/14/)
+- [Python-dotenv](https://pypi.org/project/python-dotenv/)
+- [PyJWT](https://pyjwt.readthedocs.io/en/stable/)
+- [Pytest](https://docs.pytest.org/en/6.2.x/)
+- [Sentry](https://docs.sentry.io/platforms/python/)
+- [Faker](https://faker.readthedocs.io/en/master/)
+- [FactoryBoy](https://factoryboy.readthedocs.io/en/stable/)
+- [DateTime](https://docs.python.org/3/library/datetime.html)
+- [Bcrypt](https://pypi.org/project/bcrypt/)
+- [Cryptography](https://cryptography.io/en/latest/)
+
