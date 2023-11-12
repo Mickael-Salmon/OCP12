@@ -57,7 +57,7 @@ déroulé de l’événement.
 
 -   **Gestion de Session Sécurisée**: Les tokens JWT sont utilisés pour maintenir l'état de connexion, ce qui aide à prévenir les problèmes liés à l'**A02:2021 - Cryptographic Failures**.
 
--   **Stockage Sécurisé des Mots de Passe**: Les mots de passe sont hachés avec `bcrypt`, une bonne pratique pour contrer l'**A02:2021 - Cryptographic Failures**.
+-   **Stockage Sécurisé des Mots de Passe**: Les mots de passe sont hachés et salés avec `bcrypt`, une bonne pratique pour contrer l'**A02:2021 - Cryptographic Failures**.
 
 -   **Contrôle d'Accès Basé sur les Rôles**: Des décorateurs tels que `@admin_required` et `@authenticated` sont utilisés pour restreindre l'accès à certaines fonctionnalités, relevant de l'**A01:2021 - Broken Access Control**.
 
