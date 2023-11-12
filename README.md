@@ -502,6 +502,7 @@ Le backend est réalisé en Python 3.12 et utilise les librairies suivantes:
 - [OpenClassrooms](https://openclassrooms.com/fr/paths/68-developpeur-dapplication-python)
 - [PSQL](https://www.postgresql.org/docs/current/app-psql.html)
 - [PgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/index.html)
+- [VScode-postgresql](https://github.com/microsoft/vscode-postgresql)
 - [Rich](https://rich.readthedocs.io/en/latest/)
 - [SQLAlchemy](https://docs.sqlalchemy.org/en/14/)
 - [Python-dotenv](https://pypi.org/project/python-dotenv/)
