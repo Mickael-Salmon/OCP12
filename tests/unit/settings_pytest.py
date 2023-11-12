@@ -26,7 +26,7 @@ DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
 
 # Create a PostgreSQL test engine
 __TEST_ENGINE = sqlalchemy.create_engine(
-    f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@localhost/epicevents_test"
+    f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@localhost/epic_events"
 )
 
 
