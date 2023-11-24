@@ -1,10 +1,8 @@
 ﻿import pytest
 import os
 from sqlalchemy import create_engine
-from accesscontrol.sec_sessions import Session, UserSession
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
-from models.contracts import Contract
 from tests.factories.contractFactory import ContractFactory
 
 # Charger les variables d'environnement depuis .env
