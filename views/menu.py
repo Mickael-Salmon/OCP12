@@ -305,9 +305,8 @@ def show_main_menu():
     table.add_row("[3] Gestion des événements")
     table.add_row("[4] Administration des utilisateurs")
     table.add_row("[5] Rapports et analyses")
-    table.add_row("[6] Se connecter")
-    table.add_row("[7] Se déconnecter")
-    table.add_row("[8] Quitter")
+    table.add_row("[6] Se déconnecter")
+    table.add_row("[7] Quitter")
 
     console.print(table, justify="center")
     choice = Prompt.ask("Choisis une option", choices=["1", "2", "3", "4", "5", "6", "7", "8"], default="1")
@@ -343,13 +342,10 @@ def main():
         elif choice == "5":
             show_reports_menu(user_id=user_id, token=token)
         elif choice == "6":
-            # Se reconnecter en mettant à jour l'ID utilisateur et le token
-            user_id, token = login_view(user_id=user_id, token=token)
-        elif choice == "7":
             logout_view(token=token)
             console.print(Panel("[bold green]Merci et à bientôt ![/bold green]", expand=False))
             break
-        elif choice == "8":
+        elif choice == "7":
             console.print(Panel("[bold green]À bientôt ![/bold green]", expand=False))
             break
 

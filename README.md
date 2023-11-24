@@ -195,6 +195,16 @@ suivre les événements. Voici deux exemples d’événements :
 | Filtrer l'affichage des événements          | Permet de filtrer l'affichage des événements pour n'afficher que ceux attribués à l'utilisateur. |
 | Mettre à jour les événements responsables   | Autorise les utilisateurs à mettre à jour les événements dont ils sont responsables.             |
 
+## Représentation des parcours utilisateur dans l'application
+
+```mermaid
+graph TD
+    A[Département Commercial] -->|Démarche et crée/mise à jour des profils clients| B[Plateforme]
+    C[Département Gestion] -->|Crée un contrat et l'associe au client| B
+    B -->|Contrat signé| D[Commercial crée l'événement dans la plateforme]
+    E[Département Gestion] -->|Désigne un membre du Support| F[Département Support]
+    F -->|Responsable de l'organisation et du déroulé de l'événement| G[Événement]
+```
 
 
 

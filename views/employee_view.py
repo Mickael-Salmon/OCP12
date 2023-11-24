@@ -3,13 +3,14 @@ from rich.console import Console
 from accesscontrol.database_session import with_db_session
 from models.employees import Department
 from controllers.employees import EmployeeController
+from rich.table import Table
 
 console = Console()
 
 @with_db_session
 def list_employees_view(session):
     """
-    Display a list of employees.
+    Display a table of employees with their ID, name, email, phone, and department.
 
     Args:
         session: The session object for database connection.
@@ -19,7 +20,28 @@ def list_employees_view(session):
     """
     console.print("[bold cyan]Liste des employés[/bold cyan]")
     employee_controller = EmployeeController(session)
-    employee_controller.list_employees()
+    employees = employee_controller.list_employees()
+
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("ID", style="dim")
+    table.add_column("Nom")
+    table.add_column("Email")
+    table.add_column("Département")
+
+    for employee in employees:
+        # Convertir l'objet département en une chaîne de caractères pour l'affichage
+        department_str = str(employee.department) if employee.department else "N/A"
+
+        table.add_row(
+            str(employee.id),
+            employee.full_name,
+            employee.email,
+            department_str  # Utiliser la chaîne de caractères pour le département
+        )
+
+    console.print(table)
+
+
 
 @with_db_session
 def add_employee_view(session):
