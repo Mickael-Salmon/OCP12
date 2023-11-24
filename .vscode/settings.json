@@ -8,6 +8,15 @@
             "name": "epic_events",
             "database": "epic_events",
             "username": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "epic_events_test",
+            "database": "epic_events_test",
+            "username": "postgres"
         }
     ]
 }

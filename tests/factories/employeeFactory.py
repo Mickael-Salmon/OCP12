@@ -5,10 +5,10 @@ from faker import Faker
 fake = Faker()
 
 class EmployeeFactory:
-    def __init__(self):
+    def __init__(self, department=Department.ACCOUNTING):
         self.full_name = fake.name()
         self.email = f"{fake.email().split('@')[0]}+{datetime.now().strftime('%Y%m%d%H%M%S')}@example.com"
-        self.department = Department.ACCOUNTING
+        self.department = department
 
     def create(self):
         employee = Employee(

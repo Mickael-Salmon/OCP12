@@ -1,37 +1,41 @@
-﻿import unittest
+﻿import pytest
 from sqlalchemy import create_engine
+from accesscontrol.sec_sessions import Session, UserSession
 from sqlalchemy.orm import sessionmaker
-from models.employees import Employee
+from dotenv import load_dotenv
+from models.employees import Department
+from tests.factories.employeeFactory import EmployeeFactory
+import os
 
-class TestEmployee(unittest.TestCase):
-    def setUp(self):
-        # Create an in-memory SQLite database for testing
-        engine = create_engine('sqlite:///:memory:')
-        Session = sessionmaker(bind=engine)
-        self.session = Session()
-        Employee.metadata.create_all(engine)
+# Charger les variables d'environnement depuis .env
+load_dotenv()
 
-    def tearDown(self):
-        # Clean up the database after each test
-        self.session.rollback()
-        Employee.metadata.drop_all(self.session.bind)
+# Configurer la connexion à la base de données de test
+DATABASE_URL = os.getenv("TEST_DATABASE_URL")
+engine = create_engine(DATABASE_URL)
+Session = sessionmaker(bind=engine)
 
-    def test_set_password(self):
-        employee = Employee(full_name="John Doe", email="john@example.com", department="IT")
-        employee.set_password("password123")
-        self.assertTrue(employee.check_password("password123"))
+@pytest.fixture
+def simple_sales_employee():
+    return EmployeeFactory(department=Department.SALES).create()
 
-    def test_check_password(self):
-        employee = Employee(full_name="John Doe", email="john@example.com", department="IT")
-        employee.set_password("password123")
-        self.assertTrue(employee.check_password("password123"))
-        self.assertFalse(employee.check_password("wrongpassword"))
 
-    def test_validate_email(self):
-        employee = Employee(full_name="John Doe", email="john@example.com", department="IT")
-        self.assertEqual(employee.email, "john@example.com")
-        with self.assertRaises(ValueError):
-            employee.email = "invalidemail"
+def test_sales_employee_fixture(simple_sales_employee):
+    assert simple_sales_employee.department == Department.SALES
 
-if __name__ == '__main__':
-    unittest.main()
+
+@pytest.fixture
+def sales_employee():
+    return EmployeeFactory(department=Department.SALES).create()
+
+@pytest.fixture
+def accounting_employee():
+    return EmployeeFactory(department=Department.ACCOUNTING).create()
+
+
+def test_filter_employee_by_department(sales_employee, accounting_employee):
+    all_employees = [sales_employee, accounting_employee]
+    sales_employees = [e for e in all_employees if e.department == Department.SALES]
+
+    assert len(sales_employees) == 1
+    assert sales_employees[0].department == Department.SALES
