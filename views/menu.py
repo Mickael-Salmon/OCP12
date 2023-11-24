@@ -130,7 +130,7 @@ def show_contracts_menu(*args, **kwargs):
     if choice == "1":
         list_contracts_view()
     elif choice == "2":
-        add_contract_view(user_id=user_id, token=token)
+        add_contract_view(user_id=user_id, token=token, session=session)
     elif choice == "3":
         update_contract_view()
     elif choice == "4":
@@ -144,7 +144,6 @@ def show_contracts_menu(*args, **kwargs):
 
 
 @authenticated
-@support_required
 def show_events_menu(*args, **kwargs):
     """
     Displays the events menu and handles user input.

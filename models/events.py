@@ -37,14 +37,41 @@ class Event(Base):
     contract = relationship("Contract")
     support_contact = relationship("Employee")
 
+    # @validates('start_date', 'end_date')
+    # def validate_event_dates(self, key, date_value):
+    #     today = datetime.now().date()  # Convertit en date sans heure
+    #     if key == 'start_date' and date_value < today:
+    #         raise ValueError("start_date cannot be in the past")
+    #     if key == 'end_date':
+    #         if self.start_date and date_value < self.start_date:
+    #             raise ValueError("end_date cannot be before start_date")
+    #     return date_value
+
+    # @validates('start_date', 'end_date')
+    # def validate_event_dates(self, key, date_value):
+    #     today = datetime.now().date()  # Convertit en date sans heure
+    #     date_value_date = date_value.date() if date_value else None  # Convertit date_value en date sans heure
+
+    #     if key == 'start_date' and date_value_date and date_value_date < today:
+    #         raise ValueError("start_date cannot be in the past")
+    #     if key == 'end_date':
+    #         start_date_date = self.start_date.date() if self.start_date else None
+    #         if start_date_date and date_value_date and date_value_date < start_date_date:
+    #             raise ValueError("end_date cannot be before start_date")
+    #     return date_value
+
     @validates('start_date', 'end_date')
     def validate_event_dates(self, key, date_value):
-        if key == 'start_date' and date_value < datetime.now():
-            raise ValueError("start_date cannot be in the past")
+        today = datetime.now().date()
+        if key == 'start_date':
+            if date_value and date_value < today:
+                raise ValueError("start_date cannot be in the past")
         if key == 'end_date':
-            if self.start_date and date_value < self.start_date:
+            start_date = self.__dict__.get('start_date', None)
+            if start_date and date_value and date_value < start_date:
                 raise ValueError("end_date cannot be before start_date")
         return date_value
+
 
     @validates('attendees_count')
     def validate_attendees_count(self, key, count):

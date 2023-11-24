@@ -3,6 +3,7 @@ from rich.console import Console
 from rich.table import Table
 from accesscontrol.database_session import with_db_session
 from controllers.events import EventController
+from accesscontrol.auth_decorators import authenticated, admin_required, role_required, sales_required, support_required, accounting_required
 from datetime import datetime
 from rich.prompt import Prompt
 
@@ -25,15 +26,6 @@ def validate_date(date_str):
 
 @with_db_session
 def list_events_view(session):
-    """
-    Display a table of events with their details.
-
-    Args:
-        session: The session object for database connection.
-
-    Returns:
-        None
-    """
     console.print("[bold cyan]Liste des événements[/bold cyan]")
     event_controller = EventController(session)
     events = event_controller.list_events()
@@ -45,37 +37,27 @@ def list_events_view(session):
     table.add_column("Fin", justify="right")
     table.add_column("Lieu")
     table.add_column("Participants", justify="right")
+    table.add_column("Support Contact")  # Ajout de la colonne pour le support
 
     for event in events:
         client_name = event.contract.client.full_name if event.contract and event.contract.client else "Client inconnu"
         start_date = event.start_date.strftime("%Y-%m-%d %H:%M")
         end_date = event.end_date.strftime("%Y-%m-%d %H:%M")
+        support_contact = event.support_contact.full_name if event.support_contact else "Non assigné"
         table.add_row(
             str(event.id),
             client_name,
             start_date,
             end_date,
             event.location,
-            str(event.attendees_count)
+            str(event.attendees_count),
+            support_contact
         )
 
     console.print(table)
 
 
 @with_db_session
-def add_event_view(session):
-    """
-    Displays a prompt to add a new event and collects information from the user.
-
-    Args:
-        session (Session): The session object for database connection.
-
-    Returns:
-        None
-    """
-    console.print("[bold cyan]Ajouter un nouvel événement[/bold cyan]")
-
-    # Rest of the code...
 def add_event_view(session):
     console.print("[bold cyan]Ajouter un nouvel événement[/bold cyan]")
 
@@ -211,9 +193,6 @@ def search_event_view(session):
     search_query = Prompt.ask("Entrez l'ID de l'événement ou le nom du client à rechercher")
     # Création de l'instance de EventController
     event_controller = EventController(session)
-    # Ici tu as besoin de déterminer si la recherche est par ID ou nom de client
-    # Et puis effectuer la requête appropriée. Je vais supposer que tu as une méthode
-    # dans event_controller pour gérer cela.
 
     events = event_controller.search_events(search_query)
 
