@@ -49,18 +49,6 @@ def get_user_from_token(token):
 
 # Décorateur pour authentifier les utilisateurs
 def authenticated(f):
-    """
-    Decorator function to authenticate user before executing the decorated function.
-
-    Args:
-        f (function): The function to be decorated.
-
-    Returns:
-        function: The decorated function.
-
-    Raises:
-        PermissionError: If the authentication token is missing, invalid, or expired.
-    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         token = kwargs.get('token')
@@ -71,30 +59,29 @@ def authenticated(f):
         if not user:
             raise PermissionError("Invalid or expired token.")
 
-        return f(*args, user=user, **kwargs)
-    return decorated_function
+        # Modifier les kwargs en place si 'user' n'est pas déjà présent
+        if 'user' not in kwargs:
+            kwargs['user'] = user
 
-# Décorateur pour exiger des droits d'administrateur
-def admin_required(f):
-    """
-    Decorator that checks if the user is an admin before executing the decorated function.
-
-    Args:
-        f (function): The function to be decorated.
-
-    Returns:
-        function: The decorated function.
-
-    Raises:
-        None
-
-    """
-    @authenticated
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        user = kwargs.get('user')
-        if not user or user.department != Department.ADMIN:
-            console.print("Accès non autorisé ! Merci de contacter l'administrateur.", style="bold red")
-            return  # Ici, on arrête l'exécution et on retourne au menu principal
         return f(*args, **kwargs)
     return decorated_function
+
+def role_required(department):
+    def decorator(f):
+        @authenticated
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            user = kwargs.get('user')
+            if not user or user.department != department:
+                console.print(f"Accès non autorisé pour les non-membres du département {department}.", style="bold red")
+                return
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
+
+
+# Décorateur pour exiger des droits d'administrateur
+admin_required = role_required(Department.ADMIN)
+sales_required = role_required(Department.SALES)
+accounting_required = role_required(Department.ACCOUNTING)
+support_required = role_required(Department.SUPPORT)

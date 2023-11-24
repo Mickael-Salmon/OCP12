@@ -18,6 +18,7 @@ def list_contracts_view(session):
     Returns:
         None
     """
+
     console.print("[bold cyan]Liste des contrats[/bold cyan]")
     contracts = session.query(Contract).all()
 
@@ -31,13 +32,17 @@ def list_contracts_view(session):
     for contract in contracts:
         client_name = contract.client.full_name if contract.client else "Client inconnu"
         signed_status = "Oui" if contract.is_signed else "Non"
+        total_amount_formatted = f"{contract.total_amount:.2f} €" if contract.total_amount is not None else "Non défini"
+        to_be_paid_formatted = f"{contract.to_be_paid:.2f} €" if contract.to_be_paid is not None else "Non défini"
+
         table.add_row(
             str(contract.id),
             client_name,
-            f"{contract.total_amount:.2f} €",
-            f"{contract.to_be_paid:.2f} €",
+            total_amount_formatted,
+            to_be_paid_formatted,
             signed_status
-        )
+    )
+
 
     console.print(table)
 
@@ -57,13 +62,27 @@ def add_contract_view(user_id, token, session):
     """
     console.print("[bold cyan]Ajouter un nouveau contrat[/bold cyan]")
     total_amount = Prompt.ask("Entrez le montant total du contrat")
+    try:
+        total_amount = float(total_amount)  # Convertit en float pour gérer les montants décimaux
+        if total_amount <= 0:
+            raise ValueError("Le montant doit être positif")
+    except ValueError:
+        console.print("[bold red]Veuillez entrer un montant valide.[/bold red]")
+        return
     client_id = Prompt.ask("Entrez l'ID du client pour le contrat")
     account_contact_id = Prompt.ask("Entrez l'ID du contact commercial")
-
-    # Ici, on pourrait ajouter des validations pour les IDs et les montants
+    # Demande le montant à payer
+    to_be_paid = Prompt.ask("Entrez le montant à payer pour le contrat")
+    try:
+        to_be_paid = float(to_be_paid)
+        if to_be_paid < 0:
+            raise ValueError("Le montant à payer doit être positif ou zéro")
+    except ValueError:
+        console.print("[bold red]Veuillez entrer un montant valide pour le montant à payer.[/bold red]")
+        return
 
     contract_controller = ContractController(session)
-    contract_controller.create_contract(total_amount, client_id, account_contact_id)
+    contract_controller.create_contract(total_amount, to_be_paid, client_id, account_contact_id)
 
     console.print("[bold green]Le contrat a été ajouté avec succès ![/bold green]")
 

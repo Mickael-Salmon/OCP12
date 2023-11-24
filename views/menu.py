@@ -4,8 +4,8 @@ from rich import text
 from rich.panel import Panel
 from rich import box
 from rich.table import Table
-from accesscontrol.sec_sessions import authenticated_action, admin_required, permission_required
-from accesscontrol.auth_decorators import authenticated, admin_required
+# from accesscontrol.sec_sessions import authenticated_action, admin_required, permission_required
+from accesscontrol.auth_decorators import authenticated, admin_required, role_required, sales_required, support_required, accounting_required
 from models.employees import Department
 from views.login_view import login_view
 from views.logout_view import logout_view
@@ -47,6 +47,7 @@ from views.report_view import (
 console = Console()
 
 @authenticated
+@sales_required
 def show_clients_menu(*args, **kwargs):
     """
     Displays the clients menu and handles user input.
@@ -95,6 +96,7 @@ def show_clients_menu(*args, **kwargs):
 
 
 @authenticated
+@accounting_required
 def show_contracts_menu(*args, **kwargs):
     """
     Displays the contracts menu and handles user input.
@@ -128,7 +130,7 @@ def show_contracts_menu(*args, **kwargs):
     if choice == "1":
         list_contracts_view()
     elif choice == "2":
-        add_contract_view()
+        add_contract_view(user_id=user_id, token=token)
     elif choice == "3":
         update_contract_view()
     elif choice == "4":
@@ -142,6 +144,7 @@ def show_contracts_menu(*args, **kwargs):
 
 
 @authenticated
+@support_required
 def show_events_menu(*args, **kwargs):
     """
     Displays the events menu and handles user input.
@@ -184,8 +187,7 @@ def show_events_menu(*args, **kwargs):
     else:
         console.print(Panel("[bold red]Choix invalide, veuillez réessayer.[/bold red]", expand=False))
 
-
-
+@authenticated
 @admin_required
 def show_administration_menu(*args, **kwargs):
     """

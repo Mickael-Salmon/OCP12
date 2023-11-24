@@ -11,24 +11,12 @@ import sentry_sdk
 SessionFactory = sessionmaker(bind=engine)
 
 def with_db_session(function):
-    """
-    Decorator to manage a database session for a given function.
-    Handles session commit, rollback, and closure.
-
-    Args:
-        function: The function to be decorated.
-
-    Returns:
-        The decorated function.
-
-    Raises:
-        SQLAlchemyError: If an exception occurs during the execution of the function.
-    """
     @wraps(function)
     def wrapper(*args, **kwargs):
         session = SessionFactory()
         try:
-            result = function(session, *args, **kwargs)
+            kwargs['session'] = session
+            result = function(*args, **kwargs)
             session.commit()  # Commit si aucune exception n'est levée
             return result
         except SQLAlchemyError as e:
@@ -38,6 +26,7 @@ def with_db_session(function):
         finally:
             session.close()
     return wrapper
+
 
 @with_db_session
 def create_session(session, user_id, jwt_token):

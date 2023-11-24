@@ -41,7 +41,7 @@ class ContractController:
             self.console.print("[bold red]Contrat non trouvé.[/bold red]")
         return contract
 
-    def create_contract(self, total_amount, client_id, account_contact_id):
+    def create_contract(self, total_amount, to_be_paid, client_id, account_contact_id):
         """
         Create a new contract.
 
@@ -55,6 +55,7 @@ class ContractController:
         """
         new_contract = Contract(
             total_amount=total_amount,
+            to_be_paid=to_be_paid,
             client_id=client_id,
             account_contact_id=account_contact_id,
             is_signed=False  # default value
