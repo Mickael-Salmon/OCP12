@@ -5,6 +5,7 @@ from models.employees import Employee
 from rich.console import Console
 from sqlalchemy import or_
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import func
 
 class EventController:
     """
@@ -42,7 +43,7 @@ class EventController:
             self.console.print("[bold red]Événement non trouvé.[/bold red]")
         return event
 
-    def create_event(self, start_date, end_date, location, attendees_count, notes, contract_id, support_contact_id):
+    def create_event(self, start_date, end_date, location, attendees_count, notes, contract_id):
         """
         Create a new event.
 
@@ -58,19 +59,13 @@ class EventController:
         Returns:
             Event: The Event object representing the newly created event, or None if an error occurred.
         """
-        support_contact = self.session.query(Employee).get(support_contact_id)
-        if not support_contact:
-            self.console.print(f"[bold red]Erreur : Aucun employé trouvé avec l'ID {support_contact_id}.[/bold red]")
-            return None
-
         new_event = Event(
             start_date=start_date,
             end_date=end_date,
             location=location,
             attendees_count=attendees_count,
             notes=notes,
-            contract_id=contract_id,
-            support_contact_id=support_contact_id
+            contract_id=contract_id
         )
 
         self.session.add(new_event)
@@ -131,17 +126,9 @@ class EventController:
             self.console.print("[bold red]Événement non trouvé pour suppression.[/bold red]")
 
     def search_events(self, search_query):
-        """
-        Search events based on a search query.
-
-        Args:
-            search_query (str): The search query to match against event names and notes.
-
-        Returns:
-            list: A list of Event objects matching the search query.
-        """
-        search = f"%{search_query}%"
-        events = self.session.query(Event).join(Contract, Event.contract_id == Contract.id).join(Client, Contract.client_id == Client.id).filter(
-            or_(Client.full_name.ilike(search), Event.notes.ilike(search))
-        ).all()
-        return events
+        try:
+            search_id = int(search_query)
+            return self.session.query(Event).filter(Event.id == search_id).all()
+        except ValueError:
+            # Recherche insensible à la casse
+            return self.session.query(Event).join(Event.contract).join(Contract.client).filter(func.lower(Client.full_name).contains(func.lower(search_query))).all()

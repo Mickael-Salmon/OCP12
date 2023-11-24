@@ -66,7 +66,7 @@ def show_clients_menu(*args, **kwargs):
     user_id = kwargs.get('user_id')
     token = kwargs.get('token')
 
-    console.print(Panel("[bold cyan]Gestion des clients[/bold cyan]", expand=False), justify="center")
+    console.print(Panel("[bold cyan]Commerciaux - Gestion des clients[/bold cyan]", expand=False), justify="center")
 
     table = Table(show_header=False, box=box.ROUNDED)
     table.add_row("[1] Ajouter un client")
@@ -74,10 +74,11 @@ def show_clients_menu(*args, **kwargs):
     table.add_row("[3] Supprimer un client")
     table.add_row("[4] Rechercher un client")
     table.add_row("[5] Liste des clients")
-    table.add_row("[6] Retour au menu principal")
+    table.add_row("[6] Créer un événement")
+    table.add_row("[7] Retour au menu principal")
 
     console.print(table, justify="center")
-    choice = Prompt.ask("Choisis une option", choices=["1", "2", "3", "4", "5", "6"], default="1")
+    choice = Prompt.ask("Choisis une option", choices=["1", "2", "3", "4", "5", "6", "7"], default="1")
 
     if choice == "1":
         add_client_view()
@@ -90,6 +91,8 @@ def show_clients_menu(*args, **kwargs):
     elif choice == "5":
         list_clients_view()
     elif choice == "6":
+        add_event_view()
+    elif choice == "7":
         return  # Retour au menu principal
     else:
         console.print(Panel("[bold red]Choix invalide, veuillez réessayer.[/bold red]", expand=False))
@@ -114,7 +117,7 @@ def show_contracts_menu(*args, **kwargs):
     user = kwargs['user']
     user_id = kwargs.get('user_id')
     token = kwargs.get('token')
-    console.print(Panel("[bold cyan]Gestion des contrats[/bold cyan]", expand=False), justify="center")
+    console.print(Panel("[bold cyan]Gestion - Gestion des contrats[/bold cyan]", expand=False), justify="center")
 
     table = Table(show_header=False, box=box.ROUNDED)
     table.add_row("[1] Voir tous les contrats")
@@ -122,15 +125,18 @@ def show_contracts_menu(*args, **kwargs):
     table.add_row("[3] Modifier un contrat")
     table.add_row("[4] Supprimer un contrat")
     table.add_row("[5] Rechercher un contrat")
-    table.add_row("[6] Retour au menu principal")
+    table.add_row("[6] Lister les évènements")
+    table.add_row("[7] Assigner support à un évènement")
+    table.add_row("[8] Supprimer un évènement")
+    table.add_row("[9] Retour au menu principal")
 
     console.print(table, justify="center")
-    choice = Prompt.ask("Choisis une option", choices=["1", "2", "3", "4", "5", "6"], default="1")
+    choice = Prompt.ask("Choisis une option", choices=["1", "2", "3", "4", "5", "6","7","8","9"], default="1")
 
     if choice == "1":
         list_contracts_view()
     elif choice == "2":
-        add_contract_view(user_id=user_id, token=token, session=session)
+        add_contract_view(user_id=user_id, token=token)
     elif choice == "3":
         update_contract_view()
     elif choice == "4":
@@ -138,12 +144,19 @@ def show_contracts_menu(*args, **kwargs):
     elif choice == "5":
         search_contract_view()
     elif choice == "6":
+        list_events_view()
+    elif choice == "7":
+        update_event_view()
+    elif choice == "8":
+        delete_event_view()
+    elif choice == "9":
         return  # Retour au menu principal
     else:
         console.print(Panel("[bold red]Choix invalide, veuillez réessayer.[/bold red]", expand=False))
 
 
 @authenticated
+@support_required
 def show_events_menu(*args, **kwargs):
     """
     Displays the events menu and handles user input.
@@ -161,27 +174,21 @@ def show_events_menu(*args, **kwargs):
     user = kwargs['user']
     user_id = kwargs.get('user_id')
     token = kwargs.get('token')
-    console.print(Panel("[bold cyan]Gestion des événements[/bold cyan]", expand=False), justify="center")
+    console.print(Panel("[bold cyan]Support - Gestion des événements[/bold cyan]", expand=False), justify="center")
 
     table = Table(show_header=False, box=box.ROUNDED)
-    table.add_row("[1] Ajouter un événement")
-    table.add_row("[2] Modifier un événement")
-    table.add_row("[3] Supprimer un événement")
-    table.add_row("[4] Rechercher un événement")
-    table.add_row("[5] Retour au menu principal")
+    table.add_row("[1] Lister les évènements")
+    table.add_row("[2] Rechercher un événement")
+    table.add_row("[3] Retour au menu principal")
 
     console.print(table, justify="center")
-    choice = Prompt.ask("Choisis une option", choices=["1", "2", "3", "4", "5"], default="1")
+    choice = Prompt.ask("Choisis une option", choices=["1", "2", "3"], default="1")
 
     if choice == "1":
-        add_event_view()
+        list_events_view()
     elif choice == "2":
-        update_event_view()
-    elif choice == "3":
-        delete_event_view()
-    elif choice == "4":
         search_event_view()
-    elif choice == "5":
+    elif choice == "3":
         return  # Retour au menu principal
     else:
         console.print(Panel("[bold red]Choix invalide, veuillez réessayer.[/bold red]", expand=False))
@@ -205,7 +212,7 @@ def show_administration_menu(*args, **kwargs):
     user = kwargs['user']
     user_id = kwargs.get('user_id')
     token = kwargs.get('token')
-    console.print(Panel("[bold cyan]Administration des employés[/bold cyan]", expand=False), justify="center")
+    console.print(Panel("[bold cyan]Admin - Administration des employés[/bold cyan]", expand=False), justify="center")
 
     table = Table(show_header=False, box=box.ROUNDED)
     table.add_row("[1] Ajouter un employé")
@@ -301,10 +308,10 @@ def show_main_menu():
     console.print(Panel("[bold magenta]Epic Events CRM[/bold magenta]", expand=False), justify="center")
 
     table = Table(show_header=False, box=box.ROUNDED)
-    table.add_row("[1] Gestion des clients")
-    table.add_row("[2] Gestion des contrats")
-    table.add_row("[3] Gestion des événements")
-    table.add_row("[4] Administration des utilisateurs")
+    table.add_row("[1] Commerciaux - Gestion des clients")
+    table.add_row("[2] Gestion - Gestion des contrats")
+    table.add_row("[3] Support - Gestion des événements")
+    table.add_row("[4] Admin - Administration des utilisateurs")
     table.add_row("[5] Rapports et analyses")
     table.add_row("[6] Se déconnecter")
     table.add_row("[7] Quitter")

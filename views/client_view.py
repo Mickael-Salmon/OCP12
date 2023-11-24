@@ -3,6 +3,7 @@ from rich.console import Console
 from rich.table import Table
 from accesscontrol.database_session import with_db_session
 from controllers.clients import ClientController
+from models.clients import Client
 import re
 
 console = Console()
@@ -24,14 +25,24 @@ def add_client_view(session):
     console.print("[bold cyan]Ajouter un nouveau client[/bold cyan]")
     full_name = Prompt.ask("Entrez le nom complet du client")
     email = Prompt.ask("Entrez l'email du client")
-    phone = Prompt.ask("Entrez le téléphone du client")
+    # Validation du numéro de téléphone
+    phone_valid = False
+    while not phone_valid:
+        phone = Prompt.ask("Entrez le téléphone du client")
+        if not re.match(r"^(\d{3}-\d{3}-\d{4}|\d{10})$", phone.replace(" ", "")):
+            console.print("[bold red]Numéro de téléphone invalide. Veuillez saisir le numéro au format 123-456-7890 ou 1234567890.[/bold red]")
+        elif session.query(Client).filter(Client.phone == phone).first():
+            console.print("[bold red]Ce numéro de téléphone est déjà utilisé par un autre client.[/bold red]")
+        else:
+            phone_valid = True
+
     enterprise = Prompt.ask("Entrez le nom de l'entreprise du client")
     sales_contact_id = Prompt.ask("Entrez l'ID du contact commercial")
 
-    # Appel de la méthode create_client sur l'instance de ClientController
     client_controller.create_client(full_name, email, phone, enterprise, sales_contact_id)
 
     console.print("[bold green]Le client a été ajouté avec succès ![/bold green]")
+
 
 @with_db_session
 def update_client_view(session):

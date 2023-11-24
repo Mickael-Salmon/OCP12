@@ -3,7 +3,6 @@ from rich.console import Console
 from rich.table import Table
 from accesscontrol.database_session import with_db_session
 from controllers.events import EventController
-from accesscontrol.auth_decorators import authenticated, admin_required, role_required, sales_required, support_required, accounting_required
 from datetime import datetime
 from rich.prompt import Prompt
 
@@ -80,16 +79,10 @@ def add_event_view(session):
     attendees_count = Prompt.ask("Entrez le nombre de participants attendus", default="0")
     notes = Prompt.ask("Ajoutez des notes supplémentaires pour l'événement")
     contract_id = Prompt.ask("Entrez l'ID du contrat associé à l'événement")
-    support_contact_id = Prompt.ask("Entrez l'ID du contact de support pour l'événement")
-
-    # Convertir les valeurs si nécessaire, par exemple
     attendees_count = int(attendees_count)
-    # Assure-toi que les IDs sont des entiers
     contract_id = int(contract_id)
-    support_contact_id = int(support_contact_id)
-
     event_controller = EventController(session)
-    event_controller.create_event(start_date, end_date, location, attendees_count, notes, contract_id, support_contact_id)
+    event_controller.create_event(start_date, end_date, location, attendees_count, notes, contract_id)
 
 @with_db_session
 def update_event_view(session):
