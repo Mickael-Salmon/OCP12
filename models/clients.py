@@ -6,6 +6,8 @@ It also specifies the relationship with the 'Employee' model through the 'sales_
 from models import Base  # Importing the base class for SQLAlchemy models
 from sqlalchemy.orm import relationship, validates  # ORM package for creating relationships between tables and validation
 from sqlalchemy.sql import func  # SQLAlchemy's SQL function library
+from sqlalchemy.exc import IntegrityError  # Importing exception class for handling integrity errors
+import re  # Regular expression library for validation patterns
 from sqlalchemy import (
     Column,
     Integer,
@@ -14,9 +16,6 @@ from sqlalchemy import (
     ForeignKey,
     Boolean,
 )  # Importing column types and ForeignKey for creating table schema
-from sqlalchemy.exc import IntegrityError  # Importing exception class for handling integrity errors
-
-import re  # Regular expression library for validation patterns
 
 class Client(Base):  # Client model class inheriting from Base
     """

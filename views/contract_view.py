@@ -9,6 +9,15 @@ console = Console()
 
 @with_db_session
 def list_contracts_view(session):
+    """
+    Display a table of contracts with their details.
+
+    Args:
+        session: The database session object.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Liste des contrats[/bold cyan]")
     contracts = session.query(Contract).all()
 
@@ -35,6 +44,17 @@ def list_contracts_view(session):
 
 @with_db_session
 def add_contract_view(user_id, token, session):
+    """
+    Displays a view for adding a new contract.
+
+    Args:
+        user_id (int): The ID of the user.
+        token (str): The authentication token.
+        session: The session object for database operations.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Ajouter un nouveau contrat[/bold cyan]")
     total_amount = Prompt.ask("Entrez le montant total du contrat")
     client_id = Prompt.ask("Entrez l'ID du client pour le contrat")
@@ -49,6 +69,15 @@ def add_contract_view(user_id, token, session):
 
 @with_db_session
 def update_contract_view(session):
+    """
+    Updates an existing contract.
+
+    Args:
+        session: The session object.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Modifier un contrat existant[/bold cyan]")
     contract_id = Prompt.ask("Entrez l'ID du contrat à modifier")
     contract_controller = ContractController(session)
@@ -79,6 +108,15 @@ def update_contract_view(session):
 
 @with_db_session
 def delete_contract_view(session):
+    """
+    Displays a prompt to delete a contract based on its ID.
+    If the contract exists, it asks for confirmation before deleting it.
+    If confirmed, the contract is deleted and a success message is displayed.
+    If not confirmed or the contract doesn't exist, appropriate messages are displayed.
+
+    Args:
+        session: The session object for database connection.
+    """
     console.print("[bold cyan]Supprimer un contrat[/bold cyan]")
     contract_id = Prompt.ask("Entrez l'ID du contrat à supprimer")
     contract_controller = ContractController(session)
@@ -95,6 +133,15 @@ def delete_contract_view(session):
 
 @with_db_session
 def search_contract_view(session):
+    """
+    Search for a contract based on the provided search query.
+
+    Args:
+        session (Session): The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Rechercher un contrat[/bold cyan]")
     search_query = Prompt.ask("Entrez l'ID du contrat ou le nom du client à rechercher")
 

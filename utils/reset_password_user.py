@@ -22,8 +22,15 @@ NEW_PASSWORD = Prompt.ask("[bold magenta]Entrez le nouveau mot de passe", passwo
 
 # Fonction pour hasher les mots de passe avec bcrypt
 def hash_password(password):
-    # Hash un mot de passe pour la première fois
-    # Avec un salt généré automatiquement
+    """
+    Hashes a password using bcrypt.
+
+    Args:
+        password (str): The password to be hashed.
+
+    Returns:
+        str: The hashed password.
+    """
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(password.encode('utf-8'), salt)
 

@@ -6,6 +6,15 @@ from rich.panel import Panel
 console = Console()
 
 def logout_view(token):
+    """
+    Logs out the user by invalidating the provided token.
+
+    Parameters:
+    - token (str): The token representing the user's session.
+
+    Returns:
+    None
+    """
     if token:
         # Décoder le token pour s'assurer qu'il est valide
         user_id = decode_token(token)

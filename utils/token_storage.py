@@ -14,6 +14,16 @@ else:
     SECRET_KEY = base64.urlsafe_b64encode(SECRET_KEY.encode()).decode()
 
 def save_token(employee_id, jwt_token):
+    """
+    Save the JWT token for the given employee ID.
+
+    Parameters:
+    - employee_id (int): The ID of the employee.
+    - jwt_token (str): The JWT token to be saved.
+
+    Returns:
+    None
+    """
     cipher_suite = Fernet(SECRET_KEY)
     encrypted_token = cipher_suite.encrypt(jwt_token.encode())
     session = Session(engine)
@@ -22,6 +32,15 @@ def save_token(employee_id, jwt_token):
     session.commit()
 
 def load_token(employee_id):
+    """
+    Load the JWT token for the given employee ID from the database.
+
+    Args:
+        employee_id (int): The ID of the employee.
+
+    Returns:
+        str or None: The JWT token if found, None otherwise.
+    """
     session = Session(engine)
     user_session = session.query(UserSession).filter_by(employee_id=employee_id).first()
     if not user_session:
@@ -38,6 +57,15 @@ def load_token(employee_id):
         return None
 
 def clear_token(employee_id):
+    """
+    Clears the token associated with the given employee ID.
+
+    Args:
+        employee_id (int): The ID of the employee.
+
+    Returns:
+        None
+    """
     session = Session(engine)
     session.query(UserSession).filter_by(employee_id=employee_id).delete()
     session.commit()

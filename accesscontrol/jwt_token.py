@@ -11,7 +11,16 @@ __JWT_EXPIRATION_TIME = datetime.timedelta(hours=1)
 def create_token(user_id: int) -> str:
     """
     Create a JWT for a given user ID.
-    The token is encrypted with the secret key and set to expire after a certain duration.
+
+    Args:
+        user_id (int): The ID of the user.
+
+    Returns:
+        str: The JWT token.
+
+    Raises:
+        None
+
     """
     expiration_time = datetime.datetime.now(datetime.timezone.utc) + __JWT_EXPIRATION_TIME
     return jwt.encode(
@@ -23,7 +32,15 @@ def create_token(user_id: int) -> str:
 def decode_token(token: str) -> dict:
     """
     Decode the given JWT and return its payload.
-    If the token has expired or is invalid, an exception is raised.
+
+    Args:
+        token (str): The JWT token to decode.
+
+    Returns:
+        dict: The decoded payload of the JWT.
+
+    Raises:
+        ValueError: If the token has expired or is invalid.
     """
     try:
         return jwt.decode(token, SECRET_KEY, algorithms=[__JWT_ALGORITHM])

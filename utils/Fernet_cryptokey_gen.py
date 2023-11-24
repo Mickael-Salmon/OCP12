@@ -1,7 +1,10 @@
 ﻿from cryptography.fernet import Fernet
 
-# Génère une clé Fernet
-key = Fernet.generate_key()
+def generate_fernet_key():
+    """
+    Generates a Fernet key and prints it for copying.
+    """
+    key = Fernet.generate_key()
+    print(key.decode('utf-8'))
 
-# Affiche la clé pour que tu puisses la copier
-print(key.decode('utf-8'))
+generate_fernet_key()

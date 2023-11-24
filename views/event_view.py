@@ -9,7 +9,15 @@ from rich.prompt import Prompt
 console = Console()
 
 def validate_date(date_str):
-    """ Valide une chaîne de caractères au format 'YYYY-MM-DD' et la convertit en objet datetime. """
+    """
+    Validate a string in the format 'YYYY-MM-DD' and convert it to a datetime object.
+
+    Args:
+        date_str (str): The string to be validated and converted.
+
+    Returns:
+        datetime.date or None: The converted datetime object if the string is valid, None otherwise.
+    """
     try:
         return datetime.strptime(date_str, '%Y-%m-%d').date()
     except ValueError:
@@ -17,6 +25,15 @@ def validate_date(date_str):
 
 @with_db_session
 def list_events_view(session):
+    """
+    Display a table of events with their details.
+
+    Args:
+        session: The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Liste des événements[/bold cyan]")
     event_controller = EventController(session)
     events = event_controller.list_events()
@@ -46,6 +63,19 @@ def list_events_view(session):
 
 
 @with_db_session
+def add_event_view(session):
+    """
+    Displays a prompt to add a new event and collects information from the user.
+
+    Args:
+        session (Session): The session object for database connection.
+
+    Returns:
+        None
+    """
+    console.print("[bold cyan]Ajouter un nouvel événement[/bold cyan]")
+
+    # Rest of the code...
 def add_event_view(session):
     console.print("[bold cyan]Ajouter un nouvel événement[/bold cyan]")
 
@@ -81,6 +111,15 @@ def add_event_view(session):
 
 @with_db_session
 def update_event_view(session):
+    """
+    Update an existing event with new information.
+
+    Args:
+        session (Session): The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Modifier un événement existant[/bold cyan]")
     event_id = Prompt.ask("Entrez l'ID de l'événement à modifier")
     event_controller = EventController(session)
@@ -134,6 +173,15 @@ def update_event_view(session):
 
 @with_db_session
 def delete_event_view(session):
+    """
+    Deletes an event based on the provided event ID.
+
+    Args:
+        session (Session): The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Supprimer un événement[/bold cyan]")
     event_id = Prompt.ask("Entrez l'ID de l'événement à supprimer")
     event_controller = EventController(session)
@@ -150,6 +198,15 @@ def delete_event_view(session):
 
 @with_db_session
 def search_event_view(session):
+    """
+    Search for an event based on the provided ID or client name.
+
+    Args:
+        session (Session): The database session.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Rechercher un événement[/bold cyan]")
     search_query = Prompt.ask("Entrez l'ID de l'événement ou le nom du client à rechercher")
     # Création de l'instance de EventController

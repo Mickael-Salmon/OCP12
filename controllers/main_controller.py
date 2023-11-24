@@ -1,3 +1,11 @@
 ﻿def some_authenticated_action(token):
-    # Utilise le token pour effectuer une action qui nécessite une authentification
+    """
+    Perform an action that requires authentication using the provided token.
+
+    Args:
+        token (str): The authentication token.
+
+    Returns:
+        None
+    """
     pass

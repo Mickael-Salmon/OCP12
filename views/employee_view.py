@@ -8,12 +8,30 @@ console = Console()
 
 @with_db_session
 def list_employees_view(session):
+    """
+    Display a list of employees.
+
+    Args:
+        session: The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Liste des employés[/bold cyan]")
     employee_controller = EmployeeController(session)
     employee_controller.list_employees()
 
 @with_db_session
 def add_employee_view(session):
+    """
+    Displays a prompt to add a new employee and creates the employee in the database.
+
+    Args:
+        session (Session): The database session.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Ajouter un nouvel employé[/bold cyan]")
     full_name = Prompt.ask("Entrez le nom complet de l'employé")
     email = Prompt.ask("Entrez l'email de l'employé")
@@ -32,6 +50,15 @@ def add_employee_view(session):
 
 @with_db_session
 def update_employee_view(session):
+    """
+    Update an existing employee.
+
+    Args:
+        session: The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Modifier un employé existant[/bold cyan]")
     employee_id = Prompt.ask("Entrez l'ID de l'employé à modifier")
     employee_controller = EmployeeController(session)
@@ -61,6 +88,15 @@ def update_employee_view(session):
 
 @with_db_session
 def delete_employee_view(session):
+    """
+    Deletes an employee from the system.
+
+    Args:
+        session (Session): The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Supprimer un employé[/bold cyan]")
     employee_id = Prompt.ask("Entrez l'ID de l'employé à supprimer")
     employee_controller = EmployeeController(session)
@@ -77,6 +113,15 @@ def delete_employee_view(session):
 
 @with_db_session
 def search_employee_view(session):
+    """
+    Displays a view to search for an employee by ID or name.
+
+    Args:
+        session: The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Rechercher un employé[/bold cyan]")
     search_query = Prompt.ask("Entrez l'ID de l'employé ou le nom à rechercher")
 

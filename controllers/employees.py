@@ -5,11 +5,21 @@ from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import generate_password_hash
 
 class EmployeeController:
+    """
+    Controller class for managing employees.
+    """
+
     def __init__(self, session):
         self.session = session
         self.console = Console()
 
     def list_employees(self):
+        """
+        Retrieves a list of all employees from the database.
+
+        Returns:
+            List[Employee]: A list of Employee objects.
+        """
         employees = self.session.query(Employee).all()
         self.console.print("[bold green]Liste des employés :[/bold green]")
         for employee in employees:
@@ -17,6 +27,15 @@ class EmployeeController:
         return employees
 
     def get_employee(self, employee_id):
+        """
+        Retrieves an employee by their ID.
+
+        Args:
+            employee_id (int): The ID of the employee.
+
+        Returns:
+            Employee: The Employee object if found, None otherwise.
+        """
         employee = self.session.query(Employee).get(employee_id)
         if employee:
             self.console.print(f"[bold green]Employé trouvé :[/bold green] ID {employee.id} - {employee.full_name}")
@@ -25,6 +44,21 @@ class EmployeeController:
         return employee
 
     def create_employee(self, full_name, email, department, password):
+        """
+        Creates a new employee.
+
+        Args:
+            full_name (str): The full name of the employee.
+            email (str): The email address of the employee.
+            department (str): The department of the employee.
+            password (str): The password for the employee.
+
+        Returns:
+            Employee: The newly created Employee object.
+
+        Raises:
+            SQLAlchemyError: If an error occurs during the creation process.
+        """
         new_employee = Employee(
             full_name=full_name,
             email=email,
@@ -42,6 +76,19 @@ class EmployeeController:
             raise
 
     def update_employee(self, employee_id, **kwargs):
+        """
+        Updates an employee with the given attributes.
+
+        Args:
+            employee_id (int): The ID of the employee.
+            **kwargs: The attributes to update.
+
+        Returns:
+            Employee: The updated Employee object.
+
+        Raises:
+            SQLAlchemyError: If an error occurs during the update process.
+        """
         employee = self.session.query(Employee).get(employee_id)
         if employee:
             for attr, value in kwargs.items():
@@ -59,6 +106,15 @@ class EmployeeController:
             return None
 
     def delete_employee(self, employee_id):
+        """
+        Deletes an employee by their ID.
+
+        Args:
+            employee_id (int): The ID of the employee.
+
+        Raises:
+            SQLAlchemyError: If an error occurs during the deletion process.
+        """
         employee = self.session.query(Employee).get(employee_id)
         if employee:
             self.session.delete(employee)
@@ -73,6 +129,15 @@ class EmployeeController:
             self.console.print("[bold red]Employé non trouvé pour suppression.[/bold red]")
 
     def search_employees(self, search_query):
+        """
+        Searches for employees based on a search query.
+
+        Args:
+            search_query (str): The search query.
+
+        Returns:
+            List[Employee]: A list of Employee objects matching the search query.
+        """
         try:
             search_query_int = int(search_query)
             employees = self.session.query(Employee).filter(

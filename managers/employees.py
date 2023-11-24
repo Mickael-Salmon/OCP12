@@ -3,11 +3,13 @@ This file defines the EmployeeManager class which serves as the business logic l
 It extends the base Manager class and includes methods for CRUD operations on the 'Employee' table.
 The class includes methods to create, read, update, and delete Employee records, making sure that the right permissions are checked before performing certain operations.
 """
+
 from sqlalchemy.orm import Session
 from accesscontrol.sec_sessions import permission_required
 from models.employees import Employee, Department
 from managers.manager import Manager
 import typing
+
 class EmployeeManager(Manager):
     """
     Manage the access to the ``Employee`` table, serving as the business logic layer for CRUD operations.
@@ -17,6 +19,9 @@ class EmployeeManager(Manager):
     def __init__(self, session: Session) -> None:
         """
         Initialize the EmployeeManager with a database session and the Employee model.
+
+        Args:
+            session (Session): The database session to be used.
         """
         super().__init__(session=session, model=Employee)
 
@@ -24,6 +29,10 @@ class EmployeeManager(Manager):
         """
         Retrieve one or more employee records that match the given conditions.
         Requires the user to be authenticated.
+
+        :param args: Additional positional arguments.
+        :param kwargs: Additional keyword arguments.
+        :return: A list of Employee objects.
         """
         return super().get(*args, **kwargs)
 
@@ -31,6 +40,9 @@ class EmployeeManager(Manager):
         """
         Retrieve all employee records from the database.
         Requires the user to be authenticated.
+
+        Returns:
+            A list of Employee objects representing all employee records.
         """
         return super().all()
 
@@ -38,8 +50,18 @@ class EmployeeManager(Manager):
     def create(self, full_name: str, email: str, password: str, department: Department) -> Employee:
         """
         Create a new employee record.
-        Requires the user to have 'ACCOUNTING' department privileges.
-        Hashes the password before storing it.
+
+        Args:
+            full_name (str): The full name of the employee.
+            email (str): The email address of the employee.
+            password (str): The password for the employee's account.
+            department (Department): The department the employee belongs to.
+
+        Returns:
+            Employee: The newly created employee object.
+
+        Raises:
+            PermissionError: If the user does not have 'ACCOUNTING' department privileges.
         """
         new_employee = Employee(
             full_name=full_name,
@@ -54,6 +76,14 @@ class EmployeeManager(Manager):
         """
         Update one or more employee records that match the given conditions.
         Requires the user to have 'ACCOUNTING' department privileges.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            Employee: The updated employee record.
+
         """
         return super().update(*args, **kwargs)
 
@@ -62,5 +92,12 @@ class EmployeeManager(Manager):
         """
         Delete one or more employee records that match the given conditions.
         Requires the user to have 'ACCOUNTING' department privileges.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            None
         """
         return super().delete(*args, **kwargs)

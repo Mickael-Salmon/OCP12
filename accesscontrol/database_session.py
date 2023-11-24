@@ -14,6 +14,15 @@ def with_db_session(function):
     """
     Decorator to manage a database session for a given function.
     Handles session commit, rollback, and closure.
+
+    Args:
+        function: The function to be decorated.
+
+    Returns:
+        The decorated function.
+
+    Raises:
+        SQLAlchemyError: If an exception occurs during the execution of the function.
     """
     @wraps(function)
     def wrapper(*args, **kwargs):
@@ -72,6 +81,9 @@ def update_session_activity(session, session_id):
     Args:
         session (Session): The database session.
         session_id (int): The ID of the user session.
+
+    Returns:
+        None
     """
     from models.user import UserSession
     user_session = session.query(UserSession).filter_by(id=session_id).first()

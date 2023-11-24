@@ -19,6 +19,22 @@ class Contract(Base):  # Contract model class inheriting from Base
     """
     This is the Contract model class. It defines the attributes and behaviors associated with
     a contract in the application.
+
+    Attributes:
+        id (int): The unique identifier for a contract.
+        total_amount (float): The total amount of the contract with a floating-point precision of 2.
+        to_be_paid (float): The amount yet to be paid on the contract with a floating-point precision of 2.
+        creation_date (datetime): The date and time when the contract was created.
+        is_signed (bool): A flag indicating whether the contract has been signed or not.
+        client_id (int): Foreign key linking the contract to a client in the 'clients' table.
+        account_contact_id (int): Foreign key linking the contract to an employee in the 'employees' table.
+        client (Client): Relationship with the Client model for easier navigation.
+        account_contact (Employee): Relationship with the Employee model for easier navigation.
+
+    Methods:
+        validate_amounts(key, amount): Validate that the amounts are positive and to_be_paid does not exceed total_amount.
+        list_contracts(): Retrieve a list of all contracts and print their details.
+
     """
 
     __tablename__ = "contracts"  # Specifying the table name in the database
@@ -72,6 +88,16 @@ class Contract(Base):  # Contract model class inheriting from Base
     def validate_amounts(self, key, amount):
         """
         Validate that the amounts are positive and to_be_paid does not exceed total_amount.
+
+        Parameters:
+        - key (str): The key representing the amount being validated.
+        - amount (int or float): The amount to be validated.
+
+        Raises:
+        - ValueError: If the amount is not a positive number or if to_be_paid exceeds total_amount.
+
+        Returns:
+        - amount (int or float): The validated amount.
         """
         if not isinstance(amount, (int, float)) or amount < 0:
             raise ValueError(f"{key} must be a positive number")
@@ -82,9 +108,15 @@ class Contract(Base):  # Contract model class inheriting from Base
     Establishing a relationship with the Employee model for easier navigation.
     """
     def list_contracts(self):
-        contracts = self.session.query(Contract).all()
-        self.console.print("[bold green]Liste des contrats :[/bold green]")
-        for contract in contracts:
-            client_name = contract.client.full_name if contract.client else "Client inconnu"
-            self.console.print(f"{contract.id} : {client_name} - {contract.total_amount} - {'Signé' if contract.is_signed else 'Non signé'}")
-        return contracts
+            """
+            Retrieve a list of all contracts and print their details.
+
+            Returns:
+                list: A list of Contract objects.
+            """
+            contracts = self.session.query(Contract).all()
+            self.console.print("[bold green]Liste des contrats :[/bold green]")
+            for contract in contracts:
+                client_name = contract.client.full_name if contract.client else "Client inconnu"
+                self.console.print(f"{contract.id} : {client_name} - {contract.total_amount} - {'Signé' if contract.is_signed else 'Non signé'}")
+            return contracts

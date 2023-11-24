@@ -15,7 +15,32 @@ from sqlalchemy.orm import sessionmaker
 
 
 def authenticated_action(function):
+    """
+    Decorator function that performs authentication before executing the decorated function.
+
+    Args:
+        function (callable): The function to be decorated.
+
+    Returns:
+        callable: The decorated function.
+
+    Raises:
+        PermissionError: If the JWT token is missing, invalid, or the user is not authenticated.
+    """
     def wrapper(*args, **kwargs):
+        """
+        A decorator function that performs authentication and authorization checks using a JWT token.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            The result of the decorated function.
+
+        Raises:
+            PermissionError: If the JWT token is missing, invalid, or the user is not authenticated.
+        """
         session = Session(engine)
         token = kwargs.get('token')  # Assumons que le token JWT est passé dans kwargs
         if token is None:
@@ -34,6 +59,16 @@ def authenticated_action(function):
 def admin_required(function):
     """
     Decorator that ensures the connected user is an admin before allowing execution of an action.
+
+    Args:
+        function: The function to be decorated.
+
+    Returns:
+        The decorated function.
+
+    Raises:
+        PermissionError: If the connected user is not an admin.
+
     """
     @authenticated_action
     def wrapper(*args, **kwargs):
@@ -47,6 +82,12 @@ def admin_required(function):
 def permission_required(roles):
     """
     Decorator to check if the authenticated user belongs to certain roles/departments.
+
+    Args:
+        roles (list): List of roles/departments that the user must belong to.
+
+    Returns:
+        function: Decorated function that checks the user's permissions before executing.
     """
     @authenticated_action
     def decorator(function):
@@ -60,6 +101,19 @@ def permission_required(roles):
     return decorator
 
 def create_session(user_id):
+    """
+    Create a session for the specified user.
+
+    Args:
+        user_id (int): The ID of the user.
+
+    Returns:
+        str: The generated JWT (JSON Web Token) for the user session.
+
+    Raises:
+        Exception: If an error occurs during the session creation.
+
+    """
     session = Session()
     try:
         user_session = UserSession(user_id=user_id)
@@ -75,6 +129,13 @@ def create_session(user_id):
 def delete_session_by_token(token: str, db_session: Session) -> None:
     """
     Delete a user session based on the provided token.
+
+    Args:
+        token (str): The token associated with the user session.
+        db_session (Session): The database session object.
+
+    Returns:
+        None
     """
     user_session = db_session.query(UserSession).filter_by(token=token).first()
     if user_session:
@@ -84,6 +145,14 @@ def delete_session_by_token(token: str, db_session: Session) -> None:
 def get_current_user_token(db_session: Session, user_id: int) -> str:
     """
     Retrieve the current user's token from the database using the user's ID.
+
+    Args:
+        db_session (Session): The database session object.
+        user_id (int): The ID of the user.
+
+    Returns:
+        str: The token of the current user.
+
     """
     user_session = db_session.query(UserSession).filter_by(user_id=user_id).order_by(UserSession.created_at.desc()).first()
     if user_session:

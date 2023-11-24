@@ -1,6 +1,17 @@
 ﻿"""
 This file defines the Manager class, which serves as an abstract base class for model-specific managers.
 The Manager class provides generic CRUD operations and is meant to be subclassed by other managers.
+
+The Manager class provides the following methods:
+- create(obj): Create a new record in the database.
+- all(): Retrieve all records of the model from the database.
+- get(where_clause): Retrieve records that match the given condition from the database.
+- update(*args, **kwargs): Abstract method for updating records to be implemented by subclasses.
+- delete(*args, **kwargs): Abstract method for deleting records to be implemented by subclasses.
+"""
+"""
+This file defines the Manager class, which serves as an abstract base class for model-specific managers.
+The Manager class provides generic CRUD operations and is meant to be subclassed by other managers.
 """
 
 from abc import ABC, abstractmethod

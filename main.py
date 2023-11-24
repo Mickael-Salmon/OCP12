@@ -14,6 +14,13 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 )
 
-if __name__ == "__main__":
+def main():
+    """
+    This is the main function of the program.
+    It initializes the Sentry SDK, creates tables, and starts the main menu.
+    """
     create_tables()
     menu_main()
+
+if __name__ == "__main__":
+    main()

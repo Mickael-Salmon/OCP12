@@ -4,6 +4,17 @@ from models.user import UserSession, AuthenticationError, verify_credentials
 from sqlalchemy.orm import Session
 
 def verify_user_credentials(username, password):
+    """
+    Verify the user credentials.
+
+    Args:
+        username (str): The username of the user.
+        password (str): The password of the user.
+
+    Returns:
+        tuple: A tuple containing the user ID and the session token if the credentials are valid,
+        otherwise (None, None).
+    """
     try:
         # Vérifier les identifiants de l'utilisateur
         user = verify_credentials(username, password)
@@ -21,6 +32,9 @@ def logout_user(session_id):
 
     Args:
         session_id (int): The ID of the user session.
+
+    Returns:
+        None
     """
     with Session() as session:
         # Query the user_session by ID and delete it

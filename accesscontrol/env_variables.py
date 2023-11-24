@@ -22,3 +22,29 @@ if not DATABASE_PASSWORD:
 if not SECRET_KEY:
     raise EnvironmentError(__ENV_NOT_SET_MESSAGE.format("SECRET_KEY"))
 
+def get_database_username() -> str:
+    """
+    Get the value of the EPICEVENTS_USER environment variable.
+
+    Returns:
+        str: The value of the EPICEVENTS_USER environment variable.
+    """
+    return DATABASE_USERNAME
+
+def get_database_password() -> str:
+    """
+    Get the value of the EPICEVENTS_PW environment variable.
+
+    Returns:
+        str: The value of the EPICEVENTS_PW environment variable.
+    """
+    return DATABASE_PASSWORD
+
+def get_secret_key() -> str:
+    """
+    Get the value of the SECRET_KEY environment variable.
+
+    Returns:
+        str: The value of the SECRET_KEY environment variable.
+    """
+    return SECRET_KEY

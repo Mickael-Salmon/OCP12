@@ -5,6 +5,23 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from datetime import datetime
 
 class Event(Base):
+    """
+    Represents an event.
+
+    Attributes:
+        id (int): The unique identifier of the event.
+        creation_date (datetime): The date and time when the event was created.
+        start_date (datetime): The start date and time of the event.
+        end_date (datetime): The end date and time of the event.
+        location (str): The location of the event.
+        attendees_count (int): The number of attendees for the event.
+        notes (str): Additional notes or description for the event.
+        contract_id (int): The ID of the contract associated with the event.
+        support_contact_id (int): The ID of the support contact associated with the event.
+        contract (Contract): The contract associated with the event.
+        support_contact (Employee): The support contact associated with the event.
+    """
+
     __tablename__ = "events"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

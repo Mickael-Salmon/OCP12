@@ -9,6 +9,16 @@ console = Console()
 
 @with_db_session
 def add_client_view(session):
+    """
+    Displays a prompt to add a new client and calls the create_client method
+    on the ClientController instance to create the client.
+
+    Args:
+        session (Session): The session object for database connection.
+
+    Returns:
+        None
+    """
     console = Console()
     client_controller = ClientController(session)
     console.print("[bold cyan]Ajouter un nouveau client[/bold cyan]")
@@ -25,6 +35,15 @@ def add_client_view(session):
 
 @with_db_session
 def update_client_view(session):
+    """
+    Updates an existing client's information.
+
+    Args:
+        session (Session): The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Modifier un client existant[/bold cyan]")
     client_id = Prompt.ask("Entrez l'ID du client à modifier")
     client_controller = ClientController(session)
@@ -40,7 +59,6 @@ def update_client_view(session):
                 console.print(f"[bold yellow]Le client {existing_client.full_name} reste inactif.[/bold yellow]")
                 return
 
-        # Suite de la mise à jour...
         full_name = Prompt.ask("Entrez le nouveau nom complet du client", default=existing_client.full_name)
         email = Prompt.ask("Entrez le nouvel email du client", default=existing_client.email)
         phone = existing_client.phone
@@ -80,6 +98,15 @@ def update_client_view(session):
 
 @with_db_session
 def delete_client_view(session):
+    """
+    Displays a prompt to delete a client and performs the deletion if authorized.
+
+    Args:
+        session (Session): The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Supprimer un client[/bold cyan]")
     client_id = Prompt.ask("Entrez l'ID du client à supprimer")
     client_controller = ClientController(session)
@@ -95,6 +122,15 @@ def delete_client_view(session):
 
 @with_db_session
 def search_client_view(session):
+    """
+    Search for a client based on their name or email.
+
+    Args:
+        session: The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Rechercher un client[/bold cyan]")
     search_query = Prompt.ask("Entrez le nom ou l'email du client à rechercher")
 
@@ -110,6 +146,15 @@ def search_client_view(session):
 
 @with_db_session
 def list_clients_view(session):
+    """
+    Display a table of clients with their ID, name, email, phone, and enterprise.
+
+    Args:
+        session: The session object for database connection.
+
+    Returns:
+        None
+    """
     console.print("[bold cyan]Liste des clients[/bold cyan]")
     client_controller = ClientController(session)
     clients = client_controller.list_clients()

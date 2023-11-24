@@ -48,6 +48,19 @@ console = Console()
 
 @authenticated
 def show_clients_menu(*args, **kwargs):
+    """
+    Displays the clients menu and handles user input.
+
+    Args:
+        *args: Variable length argument list.
+        **kwargs: Arbitrary keyword arguments. Expected keyword arguments are:
+            - user: The user object.
+            - user_id: The user ID.
+            - token: The authentication token.
+
+    Returns:
+        None
+    """
     user = kwargs['user']
     user_id = kwargs.get('user_id')
     token = kwargs.get('token')
@@ -83,6 +96,19 @@ def show_clients_menu(*args, **kwargs):
 
 @authenticated
 def show_contracts_menu(*args, **kwargs):
+    """
+    Displays the contracts menu and handles user input.
+
+    Args:
+        *args: Variable length argument list.
+        **kwargs: Arbitrary keyword arguments. Expected keyword arguments are:
+            - user: The user object.
+            - user_id: The user ID.
+            - token: The authentication token.
+
+    Returns:
+        None
+    """
     user = kwargs['user']
     user_id = kwargs.get('user_id')
     token = kwargs.get('token')
@@ -117,6 +143,19 @@ def show_contracts_menu(*args, **kwargs):
 
 @authenticated
 def show_events_menu(*args, **kwargs):
+    """
+    Displays the events menu and handles user input.
+
+    Args:
+        *args: Variable length argument list.
+        **kwargs: Arbitrary keyword arguments. Expected keyword arguments are:
+            - user: The user object.
+            - user_id: The user ID.
+            - token: The authentication token.
+
+    Returns:
+        None
+    """
     user = kwargs['user']
     user_id = kwargs.get('user_id')
     token = kwargs.get('token')
@@ -149,6 +188,19 @@ def show_events_menu(*args, **kwargs):
 
 @admin_required
 def show_administration_menu(*args, **kwargs):
+    """
+    Display the administration menu for managing employees.
+
+    Args:
+        *args: Variable length argument list.
+        **kwargs: Arbitrary keyword arguments. Expected keyword arguments are:
+            - user: The user object.
+            - user_id: The user ID.
+            - token: The authentication token.
+
+    Returns:
+        None
+    """
     user = kwargs['user']
     user_id = kwargs.get('user_id')
     token = kwargs.get('token')
@@ -183,6 +235,19 @@ def show_administration_menu(*args, **kwargs):
 
 @authenticated
 def show_reports_menu(*args, **kwargs):
+    """
+    Display the reports menu and handle user's choice.
+
+    Args:
+        *args: Variable length argument list.
+        **kwargs: Arbitrary keyword arguments. Expected keyword arguments are:
+            - user: User object.
+            - user_id: User ID.
+            - token: User token.
+
+    Returns:
+        None
+    """
     user = kwargs['user']
     user_id = kwargs.get('user_id')
     token = kwargs.get('token')
@@ -204,7 +269,6 @@ def show_reports_menu(*args, **kwargs):
 
     choice = Prompt.ask("Choisis une option", choices=[str(i) for i in range(1, 10)], default="1")
 
-
     if choice == "1":
         list_clients_view()
     elif choice == "2":
@@ -222,12 +286,17 @@ def show_reports_menu(*args, **kwargs):
     elif choice == "8":
         total_revenue_view()
     elif choice == "9":
-
         return  # Retour au menu principal
     else:
         console.print("[bold red]Choix invalide, veuillez réessayer.[/bold red]")
 
 def show_main_menu():
+    """
+    Displays the main menu of the Epic Events CRM.
+
+    Returns:
+        str: The user's choice from the menu.
+    """
     console.print(Panel("[bold magenta]Epic Events CRM[/bold magenta]", expand=False), justify="center")
 
     table = Table(show_header=False, box=box.ROUNDED)
@@ -246,6 +315,10 @@ def show_main_menu():
     return choice
 
 def main():
+    """
+    The main function of the application.
+    It displays the main menu and handles user choices.
+    """
     console.print(Panel("[bold green]Bienvenue dans l'application Epic Events CRM[/bold green]", expand=False))
 
     # Tente de se connecter et récupère l'ID utilisateur et le token

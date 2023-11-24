@@ -6,6 +6,15 @@ from datetime import datetime, timedelta
 SECRET_KEY = "0c3675d17b501c4fdb32718dd19740d2"
 
 def create_token(user_id: int) -> str:
+    """
+    Create a JWT token for the given user ID.
+
+    Args:
+        user_id (int): The ID of the user.
+
+    Returns:
+        str: The JWT token.
+    """
     expiration_time = func.now() + timedelta(hours=1)
     return jwt.encode(
         {"exp": expiration_time, "user_id": user_id},
@@ -14,6 +23,18 @@ def create_token(user_id: int) -> str:
     )
 
 def decode_token(token: str) -> dict:
+    """
+    Decode a JWT token and return the payload as a dictionary.
+
+    Args:
+        token (str): The JWT token to decode.
+
+    Returns:
+        dict: The decoded payload as a dictionary.
+
+    Raises:
+        ValueError: If the token has expired or is invalid.
+    """
     try:
         return jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
     except jwt.ExpiredSignatureError:

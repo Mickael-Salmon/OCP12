@@ -8,6 +8,12 @@ from rich.markdown import Markdown
 console = Console()
 
 def login_view():
+    """
+    Displays a login view for the Epic Events CRM.
+
+    Returns:
+        tuple: A tuple containing the user ID and token if the login is successful, otherwise None.
+    """
     console.print(Markdown("# 🚀 Connexion à Epic Events CRM"), style="bold magenta")
 
     username = Prompt.ask("👤 Nom d'utilisateur")
