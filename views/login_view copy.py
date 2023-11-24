@@ -17,12 +17,13 @@ def login_view():
     console.print(Markdown("# 🚀 Connexion à Epic Events CRM"), style="bold magenta")
 
     username = Prompt.ask("👤 Nom d'utilisateur")
-    password = pwinput.pwinput(prompt="🔑 Mot de passe: ")
-    user_id, token, user_name = login(username, password)
+    password = pwinput.pwinput(prompt="🔑 Mot de passe: ")  # masque la saisie du mot de passe
+
+    user_id, token = login(username, password)
 
     if user_id:
-        console.print(Panel(f"[bold green]Connexion réussie! Bienvenue, {user_name}[/bold green]", expand=False))
-        return user_id, token, user_name
+        console.print(Panel("[bold green]Connexion réussie![/bold green]", expand=False))
+        return user_id, token
     else:
         console.print(Panel("[bold red]Identifiants incorrects.[/bold red]", expand=False))
-        return None, None, None
+        return None, None

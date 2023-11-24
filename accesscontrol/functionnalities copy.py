@@ -24,13 +24,15 @@ def login(email: str, password: str) -> Employee:
     with Session(engine) as session:
         employee = session.query(Employee).filter(Employee.email == email).first()
 
-        if employee and bcrypt.checkpw(password.encode("utf-8"), employee.password_hash.encode("utf-8")):
+        if employee and bcrypt.checkpw(
+            password.encode("utf-8"), employee.password_hash.encode("utf-8")
+        ):
             token = create_token(user_id=employee.id)
             user_session = UserSession(user_id=employee.id)
             session.add(user_session)
             session.commit()
-            return employee, user_session.token, employee.full_name  # Ajout du nom complet de l'employé
-        return None, None, None  # Retourne un tuple avec trois éléments
+            return employee, user_session.token
+    return None, None  # Always return a tuple to match expected return type
 
 
 def logout(token: str):

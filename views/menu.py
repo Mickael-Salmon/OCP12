@@ -48,7 +48,8 @@ console = Console()
 
 @authenticated
 @sales_required
-def show_clients_menu(*args, **kwargs):
+def show_clients_menu(user_name,*args, **kwargs):
+    console.print(f"[bold green]L'utilisateur {user_name} est connecté![/bold green]")
     """
     Displays the clients menu and handles user input.
 
@@ -100,7 +101,8 @@ def show_clients_menu(*args, **kwargs):
 
 @authenticated
 @accounting_required
-def show_contracts_menu(*args, **kwargs):
+def show_contracts_menu(user_name, *args, **kwargs):
+    console.print(f"[bold green]L'utilisateur {user_name} est connecté![/bold green]")
     """
     Displays the contracts menu and handles user input.
 
@@ -157,7 +159,8 @@ def show_contracts_menu(*args, **kwargs):
 
 @authenticated
 @support_required
-def show_events_menu(*args, **kwargs):
+def show_events_menu(user_name,*args, **kwargs):
+    console.print(f"[bold green]L'utilisateur {user_name} est connecté![/bold green]")
     """
     Displays the events menu and handles user input.
 
@@ -195,7 +198,8 @@ def show_events_menu(*args, **kwargs):
 
 @authenticated
 @admin_required
-def show_administration_menu(*args, **kwargs):
+def show_administration_menu(user_name, *args, **kwargs):
+    console.print(f"[bold green]L'utilisateur {user_name} est connecté![/bold green]")
     """
     Display the administration menu for managing employees.
 
@@ -242,7 +246,8 @@ def show_administration_menu(*args, **kwargs):
 
 
 @authenticated
-def show_reports_menu(*args, **kwargs):
+def show_reports_menu(user_name, *args, **kwargs):
+    console.print(f"[bold green]L'utilisateur {user_name} est connecté![/bold green]")
     """
     Display the reports menu and handle user's choice.
 
@@ -329,7 +334,7 @@ def main():
     console.print(Panel("[bold green]Bienvenue dans l'application Epic Events CRM[/bold green]", expand=False))
 
     # Tente de se connecter et récupère l'ID utilisateur et le token
-    user_id, token = login_view()
+    user_id, token, user_name = login_view()
 
     # Vérifie si la connexion a réussi
     if not user_id:
@@ -340,15 +345,15 @@ def main():
         choice = show_main_menu()
 
         if choice == "1":
-            show_clients_menu(user_id=user_id, token=token)
+            show_clients_menu(user_id=user_id, token=token, user_name=user_name)
         elif choice == "2":
-            show_contracts_menu(user_id=user_id, token=token)
+            show_contracts_menu(user_id=user_id, token=token, user_name=user_name)
         elif choice == "3":
-            show_events_menu(user_id=user_id, token=token)
+            show_events_menu(user_id=user_id, token=token, user_name=user_name)
         elif choice == "4":
-            show_administration_menu(user_id=user_id, token=token)
+            show_administration_menu(user_id=user_id, token=token, user_name=user_name)
         elif choice == "5":
-            show_reports_menu(user_id=user_id, token=token)
+            show_reports_menu(user_id=user_id, token=token, user_name=user_name)
         elif choice == "6":
             logout_view(token=token)
             console.print(Panel("[bold green]Merci et à bientôt ![/bold green]", expand=False))
