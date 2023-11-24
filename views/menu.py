@@ -4,7 +4,6 @@ from rich import text
 from rich.panel import Panel
 from rich import box
 from rich.table import Table
-# from accesscontrol.sec_sessions import authenticated_action, admin_required, permission_required
 from accesscontrol.auth_decorators import authenticated, admin_required, role_required, sales_required, support_required, accounting_required
 from models.employees import Department
 from views.login_view import login_view

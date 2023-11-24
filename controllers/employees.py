@@ -2,8 +2,8 @@
 from rich.console import Console
 from sqlalchemy import or_
 from sqlalchemy.exc import SQLAlchemyError
-from werkzeug.security import generate_password_hash
-
+# from werkzeug.security import generate_password_hash
+import bcrypt
 class EmployeeController:
     """
     Controller class for managing employees.
@@ -59,12 +59,13 @@ class EmployeeController:
         Raises:
             SQLAlchemyError: If an error occurs during the creation process.
         """
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         new_employee = Employee(
             full_name=full_name,
             email=email,
-            department=department
+            department=department,
+            password_hash=hashed_password.decode('utf-8')  # Stocke le hash sous forme de string
         )
-        new_employee.password_hash = generate_password_hash(password)
         try:
             self.session.add(new_employee)
             self.session.commit()
